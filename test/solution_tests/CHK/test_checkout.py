@@ -189,12 +189,14 @@ def test_checkout_for_basket_with_V_rule_2():
     "skus", 
     [
         "STXYZ",
-        "ABC",
-        "DEE",
-        "ABCFGH"
+        "TXYZS",
+        "XYZST",
+        "YZSTX",
+        "ZSTXY"
     ]
 )
 def test_checkout_for_basket_with_group_discount():
     sku_string = "STXYZ"
 
-    assert checkout_solution.checkout(sku_string) == 0
+    # The cheapest pair, plus the price of the offer
+    assert checkout_solution.checkout(sku_string) == 37 + 45
