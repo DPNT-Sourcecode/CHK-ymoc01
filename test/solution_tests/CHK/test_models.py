@@ -113,6 +113,7 @@ def test_load_offers_correctly_loads_offer_with_multibuy_products():
     assert loaded_offer.mutlibuy_with_products == ["B", "C"]
 
 
+@pytest.mark.parametrize("test_input,expected", [("3+5", 8), ("2+4", 6), ("6*9", 42)])
 def test_group_discount_offer_times_offer_can_be_applied_returns_one_for_one_group():
     discount_offer = GroupDiscountOffer(
         product="A",
@@ -122,5 +123,6 @@ def test_group_discount_offer_times_offer_can_be_applied_returns_one_for_one_gro
     skus = "ABCDE"
 
     assert discount_offer.times_offer_can_be_applied(skus) == 1
+
 
 

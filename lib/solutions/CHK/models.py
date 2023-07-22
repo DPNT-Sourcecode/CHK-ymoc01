@@ -42,7 +42,13 @@ class GroupDiscountOffer(Offer):
 
     def times_offer_can_be_applied(self, skus: str) -> int:
         multibuy_group = self.mutlibuy_with_products + [self.product]
-        return 0
+
+        match_count = 0
+        for sku in skus:
+            if sku in multibuy_group:
+                match_count += 1
+
+        return int(match_count / self.quantity)
 
     def apply(self, skus: str) -> tuple[int, str]:
         return 0, skus
@@ -133,6 +139,7 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
 
 
