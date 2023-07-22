@@ -67,9 +67,10 @@ class Basket(BaseModel):
     def _apply_free_products(self, skus: str):
         offers_with_free_product = [offer for offer in self.offers if offer.side_effect is not None]
 
+        products_to_remove = []
         for offer_with_free_product in offers_with_free_product:
-            if offer_with_free_product.can_be_applied(skus):
-                ...
+            for _ in range(offer_with_free_product.times_offer_can_be_applied(skus)):
+                products_to_remove.append(offer_with_free_product.side_effect.product)
 
 
     def _apply_offers(self, offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
@@ -110,5 +111,6 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
