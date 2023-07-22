@@ -39,3 +39,18 @@ class TestSum():
             sum_solution.compute(first_integer, second_integer)
 
         assert str(exception.value) == "Inputs must be greater than 0"
+
+    @pytest.mark.parametrize(
+        "first_argument, second_argument", 
+        [
+            ("9", 1), 
+            (2, "14"),
+            ("9", "1"),
+            ([19], [5, 5])
+        ]
+    )
+    def test_sum_with_invalid_types_raises_exception(self, first_argument, second_argument):
+        with pytest.raises(TypeError) as exception:
+            sum_solution.compute(first_argument, first_argument)
+        
+        assert str(exception.value) == "Inputs must be integers"
