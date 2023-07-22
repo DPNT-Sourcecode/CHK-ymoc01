@@ -42,5 +42,3 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
         total_offer_price += offer_price
 
     return total_offer_price, count_after_offers
-
-

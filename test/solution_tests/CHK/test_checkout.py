@@ -28,6 +28,11 @@ def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged
     offer = Offer(quantity=999, price=999)
     assert checkout_solution.calculate_price_of_offers([offer], 1) == (0, 1)
 
+
+
+def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
+    ...
+
 def test_offer_apply_returns_offer_price_and_adjusted_count():
     offer = Offer(quantity=3, price=999)
     assert offer.apply(3) == (999, 0)
@@ -52,11 +57,3 @@ def test_load_offers_correctly_loads_offer_as_object():
     assert loaded_offer.quantity == 25
     assert loaded_offer.price == 100
     assert loaded_offer.side_effect == None
-
-def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
-    ...
-    
-
-
-
-

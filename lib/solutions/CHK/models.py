@@ -39,7 +39,5 @@ def load_offers() -> dict[str, Offer]:
                 side_effect=side_effect
             )
         )
-    
+    breakpoint()
     return parsed_offers
-
-
