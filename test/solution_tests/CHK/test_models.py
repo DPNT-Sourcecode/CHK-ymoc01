@@ -11,6 +11,18 @@ def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
     offer = Offer(product="A", quantity=999, price=999)
     assert offer.apply(1) == (0, 1)
 
+def test_offer_times_offer_can_be_applied_when_offer_can_be_applied_returns_greater_than_zero():
+    offer = Offer(product="A", quantity=3, price=999)
+    skus = "AAAAAAA"
+
+    assert offer.times_offer_can_be_applied(skus) == 2
+
+def test_offer_times_offer_can_be_applied_when_offer_cant_be_applied_returns_zero():
+    offer = Offer(product="A", quantity=3, price=999)
+    skus = "AAAAAAA"
+
+    assert offer.times_offer_can_be_applied(skus) == 2
+
 @patch(
     "solutions.CHK.static_prices.OFFERS", [
         {
@@ -80,4 +92,5 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert loaded_offer.price == 100
     assert loaded_offer.side_effect != None
     assert loaded_offer.side_effect.product == "B"
+
 
