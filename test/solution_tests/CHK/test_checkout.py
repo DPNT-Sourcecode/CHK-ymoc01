@@ -36,10 +36,11 @@ def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_c
     offers = [offer_for_three, offer_for_five]
     count = 6
 
-    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, 6)
+    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, count)
 
     assert total_offer_price == 200
     assert count_after_offers == 1
+
 
 
 

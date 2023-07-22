@@ -37,7 +37,9 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
     total_offer_price = 0
     count_after_offers = count
 
-    for offer in offers:
+    # At the moment, highest quantity offers benefit customer more, so prioritise those
+    sorted_offers = sorted(offers, key=lambda x: x.quantity, reverse=True)
+    for offer in sorted_offers:
         offer_price, count_after_offers = offer.apply(count_after_offers)
         total_offer_price += offer_price
 
