@@ -37,7 +37,7 @@ from solutions.CHK.models import Offer, load_offers
 #     assert offer.apply(1) == (0, 1)
 
 @patch(
-    "solutions.CHK.static_prices.OFFERS", {   
+    "lib.solutions.CHK.static_prices.OFFERS", {   
         "A": {
             "quantity": 25,
             "price": 100,
@@ -49,8 +49,10 @@ def test_load_offers_correctly_loads_offer_as_object():
     assert len(loaded_offers) == 1
     assert loaded_offers["A"].quantity == 25
     assert loaded_offers["A"].price == 100
+    assert loaded_offers["A"].side_effect == None
 
 def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
     ...
     
+
 
