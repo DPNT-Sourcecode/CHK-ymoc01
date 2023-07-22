@@ -29,7 +29,7 @@ def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged
     offers = [offer]
     assert checkout_solution.calculate_price_of_offers(offers, 1) == (0, 1)
 
-def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
+def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity():
     offer_for_three = Offer(quantity=3, price=130)
     offer_for_five = Offer(quantity=5, price=200)
 
@@ -40,6 +40,20 @@ def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_c
 
     assert total_offer_price == 200
     assert count_after_offers == 1
+
+def test_calculate_price_of_offers_for_multiple_offers_calculates_applies_both_offers():
+    offer_for_three = Offer(quantity=3, price=130)
+    offer_for_five = Offer(quantity=5, price=200)
+
+    offers = [offer_for_three, offer_for_five]
+    count = 9
+
+    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, count)
+
+    assert total_offer_price == 330
+    assert count_after_offers == 1
+
+
 
 
 
