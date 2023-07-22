@@ -19,7 +19,7 @@ def checkout(skus: str) -> int:
         offer = offers.get(product)
         if offer:
             basket_total += calculate_price_of_offers(offer, count)
-            adjusted_count = count - offer["quantity"]
+            adjusted_count = count - int(count / offer["quantity"])
         else:
             adjusted_count = count
         
