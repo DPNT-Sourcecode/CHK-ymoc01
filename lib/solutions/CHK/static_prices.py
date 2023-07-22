@@ -14,6 +14,11 @@ OFFERS = [
         "price": 130,
     },
     {
+        "product": "A",
+        "quantity": 5,
+        "price": 200
+    },
+    {
         "product": "B",
         "quantity": 2,
         "price": 45
@@ -25,3 +30,4 @@ OFFERS = [
         "free_product": "B"
     }
 ]
+
