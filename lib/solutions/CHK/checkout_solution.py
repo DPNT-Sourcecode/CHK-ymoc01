@@ -1,12 +1,12 @@
 
 
 from solutions.CHK.models import Basket, load_offers
-from solutions.CHK.static_prices import ITEM_PRICES
+from solutions.CHK import static_prices
 
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
-    prices = ITEM_PRICES
+    prices = static_prices.ITEM_PRICES
     offers = load_offers()
 
     basket = Basket(skus=skus, prices=prices, offers=offers)
