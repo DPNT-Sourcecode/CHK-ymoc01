@@ -9,7 +9,7 @@ ITEM_PRICES = {
     "H": 10,
     "I": 35,
     "J": 60,
-    "K": 80,
+    "K": 70,
     "L": 90,
     "M": 15,
     "N": 40,
@@ -17,14 +17,14 @@ ITEM_PRICES = {
     "P": 50,
     "Q": 30,
     "R": 50,
-    "S": 30,
+    "S": 20,
     "T": 20,
     "U": 40,
     "V": 50,
     "W": 20,
-    "X": 90,
-    "Y": 10,
-    "Z": 50,
+    "X": 17,
+    "Y": 20,
+    "Z": 21,
 }
 
 
@@ -40,7 +40,7 @@ OFFERS = [
     {"product": "F", "quantity": 3, "free_product": "F"},
     {"product": "H", "quantity": 5, "price": 45},
     {"product": "H", "quantity": 10, "price": 80},
-    {"product": "K", "quantity": 2, "price": 150},
+    {"product": "K", "quantity": 2, "price": 120},
     {"product": "N", "quantity": 3, "free_product": "M"},
     {"product": "P", "quantity": 5, "price": 200},
     {"product": "Q", "quantity": 3, "price": 80},
@@ -49,3 +49,4 @@ OFFERS = [
     {"product": "V", "quantity": 2, "price": 90},
     {"product": "V", "quantity": 3, "price": 130},
 ]
+
