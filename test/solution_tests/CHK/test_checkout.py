@@ -126,3 +126,63 @@ def test_checkout_for_basket_with_B_rule():
     sku_string = "BB"
     
     assert checkout_solution.checkout(sku_string) == 45
+
+def test_checkout_for_basket_with_E_rule():
+    sku_string = "BEE"
+    
+    assert checkout_solution.checkout(sku_string) == 40
+
+def test_checkout_for_basket_with_F_rule():
+    sku_string = "FFF"
+    
+    assert checkout_solution.checkout(sku_string) == 20
+
+def test_checkout_for_basket_with_H_rule_1():
+    sku_string = "HHHHH"
+    
+    assert checkout_solution.checkout(sku_string) == 45
+
+def test_checkout_for_basket_with_H_rule_2():
+    sku_string = "HHHHHHHHHH"
+    
+    assert checkout_solution.checkout(sku_string) == 80
+
+
+def test_checkout_for_basket_with_K_rule():
+    sku_string = "KK"
+    
+    assert checkout_solution.checkout(sku_string) == 150
+
+def test_checkout_for_basket_with_N_rule():
+    sku_string = "NNNM"
+    
+    assert checkout_solution.checkout(sku_string) == 120
+
+def test_checkout_for_basket_with_P_rule():
+    sku_string = "PPPPP"
+    
+    assert checkout_solution.checkout(sku_string) == 200
+
+def test_checkout_for_basket_with_Q_rule():
+    sku_string = "BB"
+    
+    assert checkout_solution.checkout(sku_string) == 45
+
+def test_checkout_for_basket_with_R_rule():
+    sku_string = "BB"
+    
+    assert checkout_solution.checkout(sku_string) == 45
+
+def test_checkout_for_basket_with_U_rule():
+    sku_string = "BB"
+    
+    assert checkout_solution.checkout(sku_string) == 45
+
+def test_checkout_for_basket_with_V_rule_1():
+    sku_string = "BB"
+    
+    assert checkout_solution.checkout(sku_string) == 45
+def test_checkout_for_basket_with_V_rule_2():
+    sku_string = "BB"
+    
+    assert checkout_solution.checkout(sku_string) == 45
