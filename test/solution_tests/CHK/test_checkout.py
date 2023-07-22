@@ -1,4 +1,5 @@
 from solutions.CHK import checkout_solution
+from solutions.CHK.models import Offer
 
 # TODO what happens if the prices change, which reqs say offers do weekly
 # fixtures and patching probably quickest way around this, prefer factoryboy
@@ -23,6 +24,7 @@ def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adju
         "quantity": 3,
         "price": 999,
     }
+    offer = Offer(quantity=3, price=999)
     assert checkout_solution.calculate_price_of_offers(offer, 3) == (999, 0)
 
 def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
