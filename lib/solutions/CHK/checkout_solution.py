@@ -10,15 +10,18 @@ def checkout(skus: str) -> int:
     offers = OFFERS
 
     # For now, assuming SKUs are structured like AAABCAD
-    basket_total = 0
-    basket_counts: defaultdict(int) = {}
+    product_counts: defaultdict(int) = {}
     for sku in skus:
-        basket_counts[sku] += 1
-        # try:
-        #     basket_total += prices[sku]
-        # except KeyError:
-        #     return -1
-        
+        product_counts[sku] += 1
+ 
+    basket_total = 0
+    for product, count in product_counts.items():
+        offer = offers.get("product")
+        if offer:
+            
+
+
+
     return basket_total
 
 

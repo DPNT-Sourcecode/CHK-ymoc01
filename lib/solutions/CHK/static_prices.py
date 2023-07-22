@@ -7,6 +7,12 @@ ITEM_PRICES = {
 }
 
 OFFERS = {
-    "3A": 130,
-    "2B": 45
+    "A": {
+        "quantity": 3,
+        "offer_price": 130,
+    },
+    "B": {
+        "quantity": 2,
+          "offer_price": 45
+    }
 }
