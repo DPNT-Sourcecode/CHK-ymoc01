@@ -36,12 +36,10 @@ def checkout(skus: str) -> int:
 def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int]:
     total_offer_price = 0
     count_after_offers = count
+
     for offer in offers:
-        offer_price, count_after_offer = offer.apply(count, count_after_offers)
+        offer_price, count_after_offer = offer.apply(count_after_offers)
+        total_offer_price += offer_price
+        count_after_offers -= count_after_offer
 
-    number_of_offer_occurences = int(count / offer.quantity)
-
-    offers_price = number_of_offer_occurences * offer.price
-    count_after_offers = count - (offer.quantity * int(count / offer.quantity))
-
-    return offers_price, count_after_offers
+    return total_offer_price, count_after_offers
