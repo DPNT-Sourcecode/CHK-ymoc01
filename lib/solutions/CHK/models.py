@@ -24,15 +24,16 @@ class PriceOffer(Offer):
         offers_price = number_of_offer_occurences * self.price
         count_to_remove = (self.quantity * number_of_offer_occurences)
 
-        return offers_price, count_to_remove
+        skus_after_processing = skus.replace(self.product, "", count_to_remove)
+        return offers_price, skus_after_processing
 
 class FreeProductOffer(Offer):
     free_product: str
 
-    def apply(self, skus: str) -> str:
+    def apply(self, skus: str) -> tuple[int, str]:
         skus_after_processing = skus
 
-        return skus_after_processing.replace(
+        return 0, skus_after_processing.replace(
             self.free_product, "", self.times_offer_can_be_applied(skus)
         )
 
@@ -40,14 +41,9 @@ class MultibuyOffer(Offer):
     mutlibuy_with_products: list[str]
 
     def times_offer_can_be_applied(self, skus: str) -> int:
-        count = skus.count(self.product)
+        ...
 
-        if count < self.quantity:
-            return 0
-        
-        return int(count / self.quantity)
-
-    def apply(self, skus: str) -> tuple[int, int]:
+    def apply(self, skus: str) -> tuple[int, str]:
         ...
 
 class Basket(BaseModel):
@@ -71,7 +67,9 @@ class Basket(BaseModel):
 
         return basket_total
 
-    def _apply_free_products(self, skus: str):
+    def _apply_group_discounts(self, skus: str) -> tuple[str, int]:
+
+    def _apply_free_products(self, skus: str) -> str:
         offers_with_free_product = [
             offer for offer in self.offers 
             if isinstance(offer, FreeProductOffer)
@@ -79,7 +77,7 @@ class Basket(BaseModel):
         skus_after_processing = skus
 
         for offer_with_free_product in offers_with_free_product:
-            skus_after_processing = offer_with_free_product.apply(skus_after_processing)
+            _, skus_after_processing = offer_with_free_product.apply(skus_after_processing)
 
         
         return skus_after_processing
@@ -100,12 +98,8 @@ class Basket(BaseModel):
         )
 
         for offer in sorted_offers:
-            offer_price, count_to_remove = offer.apply(skus_after_processing)
+            offer_price, skus_after_processing = offer.apply(skus_after_processing)
             total_offer_price += offer_price
-
-            skus_after_processing = skus_after_processing.replace(
-                offer.product, "", count_to_remove
-            )
 
         return skus_after_processing, total_offer_price
 
@@ -137,3 +131,4 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
