@@ -39,6 +39,7 @@ class Basket(BaseModel):
 
         skus_to_process = self._apply_free_products(skus_to_process)
 
+        skus_to_process, offer_value = self._apply_offers(skus_to_process)
         # product_counts = defaultdict(int)
         # for sku in self.skus:
         #     product_counts[sku] += 1
@@ -79,22 +80,19 @@ class Basket(BaseModel):
         
         return skus_after_processing
 
-    def _apply_offers(self, offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
+    def _apply_offers(self, skus: str) -> tuple[str, int]:
         total_offer_price = 0
-        count_after_offers = count
-        free_products = []
+        skus_after_processing = skus_after_processing
 
         # At the moment, highest quantity offers benefit customer more, so prioritise those
-        sorted_offers = sorted(offers, key=lambda x: x.quantity, reverse=True)
+        sorted_offers = sorted(self.offers, key=lambda x: x.quantity, reverse=True)
         for offer in sorted_offers:
             offer_price, count_after_offers = offer.apply(count_after_offers)
             total_offer_price += offer_price
 
-            if offer_price != 0 and offer.side_effect is not None:
-                free_products.append(offer.side_effect.product)
 
 
-        return total_offer_price, count_after_offers, free_products
+        return skus_after_processing, total_offer_price
 
 
 def load_offers() -> dict[str, Offer]:
@@ -117,6 +115,7 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
 
