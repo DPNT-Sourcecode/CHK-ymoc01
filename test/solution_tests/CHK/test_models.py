@@ -57,4 +57,3 @@ def test_load_offers_correctly_loads_multiple_offers_as_objects():
     assert loaded_offer.quantity == 50
     assert loaded_offer.price == 75
     assert loaded_offer.side_effect == None
-
