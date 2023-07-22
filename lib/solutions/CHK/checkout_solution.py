@@ -37,7 +37,7 @@ def checkout(skus: str) -> int:
     return basket_total
 
 # This signature is becoming absolutely grim, refactor into something which knows about
-# the overarching list of products, perhaps Basket model
+# the overarching list of products to be purchased, perhaps Basket model
 def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
     total_offer_price = 0
     count_after_offers = count
@@ -54,5 +54,6 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
 
 
     return total_offer_price, count_after_offers, free_products
+
 
 
