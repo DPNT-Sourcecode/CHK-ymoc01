@@ -29,6 +29,8 @@ class Basket(BaseModel):
 
     def calculate_price(self):
         skus_to_process = self.skus
+
+        skus_to_process = self._apply_free_products(skus_to_process)
         # product_counts = defaultdict(int)
         # for sku in self.skus:
         #     product_counts[sku] += 1
@@ -56,7 +58,9 @@ class Basket(BaseModel):
 
 
     def _apply_free_products(self):
-        ...
+        for product, offers in self.offers.items():
+            offers_with_free_product = [offer for offer in offers if offer.side_effect is not None]
+        free_product_offers = [offer for offer in ]
 
     def _apply_offers(self, offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
         total_offer_price = 0
@@ -95,6 +99,7 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
 
