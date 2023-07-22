@@ -5,11 +5,11 @@ from solutions.CHK.models import Offer, load_offers
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
     offer = Offer(product="A", quantity=3, price=999)
-    assert offer.apply(3) == (999, 0)
+    assert offer.apply(3) == (999, 3)
 
 def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
     offer = Offer(product="A", quantity=999, price=999)
-    assert offer.apply(1) == (0, 1)
+    assert offer.apply(1) == (0, 0)
 
 def test_offer_times_offer_can_be_applied_when_offer_can_be_applied_returns_greater_than_zero():
     offer = Offer(product="A", quantity=3, price=999)
@@ -92,6 +92,7 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert loaded_offer.price == 100
     assert loaded_offer.side_effect != None
     assert loaded_offer.side_effect.product == "B"
+
 
 
 

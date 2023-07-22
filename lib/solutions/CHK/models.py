@@ -19,9 +19,9 @@ class Offer(BaseModel):
         number_of_offer_occurences = int(count / self.quantity)
 
         offers_price = number_of_offer_occurences * self.price
-        count_after_offers = count - (self.quantity * int(count / self.quantity))
+        count_to_remove = (self.quantity * int(count / self.quantity))
 
-        return offers_price, count_after_offers
+        return offers_price, count_to_remove
     
     def times_offer_can_be_applied(self, skus: str) -> int:
         count = skus.count(self.product)
@@ -82,12 +82,13 @@ class Basket(BaseModel):
 
     def _apply_offers(self, skus: str) -> tuple[str, int]:
         total_offer_price = 0
-        skus_after_processing = skus_after_processing
+        skus_after_processing = skus
 
         # At the moment, highest quantity offers benefit customer more, so prioritise those
         sorted_offers = sorted(self.offers, key=lambda x: x.quantity, reverse=True)
         for offer in sorted_offers:
-            offer_price, count_after_offers = offer.apply(count_after_offers)
+            count = skus_after_processing.count(offer.product)
+            offer_price, count_to_remove = offer.apply(count_after_offers)
             total_offer_price += offer_price
 
 
@@ -115,6 +116,7 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
 
