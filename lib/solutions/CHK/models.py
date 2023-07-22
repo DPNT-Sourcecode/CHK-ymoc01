@@ -29,13 +29,13 @@ class PriceOffer(Offer):
 class FreeProductOffer(Offer):
     free_product: str
 
-    def apply(self, count: int) -> tuple[int, int]:
-        number_of_offer_occurences = int(count / self.quantity)
-
-        offers_price = number_of_offer_occurences * self.price
-        count_to_remove = (self.quantity * int(count / self.quantity))
-
-        return offers_price, count_to_remove
+    def apply(self, skus: str) -> str:
+        skus_after_processing = skus
+        for _ in range(self.times_offer_can_be_applied(skus)):
+            product_to_remove = self.free_product
+            skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
+        
+        return skus
 
 class Basket(BaseModel):
     skus: str
@@ -66,9 +66,8 @@ class Basket(BaseModel):
         skus_after_processing = skus
 
         for offer_with_free_product in offers_with_free_product:
-            for _ in range(offer_with_free_product.times_offer_can_be_applied(skus)):
-                product_to_remove = offer_with_free_product.free_product
-                skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
+            skus_after_processing = offer_with_free_product.apply(skus_after_processing)
+
         
         return skus_after_processing
 
@@ -120,3 +119,4 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+

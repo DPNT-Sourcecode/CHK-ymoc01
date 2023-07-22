@@ -1,24 +1,24 @@
 
 from unittest.mock import patch
-from solutions.CHK.models import FreeProductOffer, Offer, PriceOffer, load_offers
+from solutions.CHK.models import FreeProductOffer, PriceOffer, load_offers
 
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
-    offer = Offer(product="A", quantity=3, price=999)
+    offer = PriceOffer(product="A", quantity=3, price=999)
     assert offer.apply(3) == (999, 3)
 
 def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
-    offer = Offer(product="A", quantity=999, price=999)
+    offer = PriceOffer(product="A", quantity=999, price=999)
     assert offer.apply(1) == (0, 0)
 
 def test_offer_times_offer_can_be_applied_when_offer_can_be_applied_returns_greater_than_zero():
-    offer = Offer(product="A", quantity=3, price=999)
+    offer = PriceOffer(product="A", quantity=3, price=999)
     skus = "AAAAAAA"
 
     assert offer.times_offer_can_be_applied(skus) == 2
 
 def test_offer_times_offer_can_be_applied_when_offer_cant_be_applied_returns_zero():
-    offer = Offer(product="A", quantity=3, price=999)
+    offer = PriceOffer(product="A", quantity=3, price=999)
     skus = "A"
 
     assert offer.times_offer_can_be_applied(skus) == 0
@@ -91,3 +91,4 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.free_product == "B"
+
