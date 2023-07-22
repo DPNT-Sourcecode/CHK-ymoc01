@@ -49,3 +49,20 @@ def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity
     sku_string = "AAAAAA"
     
     assert checkout_solution.checkout(sku_string) == 200 + 50
+
+
+@patch(
+    "solutions.CHK.models.load_offers"
+)
+@patch(
+    "solutions.CHK.static_prices.ITEM_PRICES", {
+        "A": 10
+    }
+)
+def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity(mocked_load_offers):
+    offer_for_self_removal = Offer(product="A", quantity=2, price=20, side_effect=FreeProductSideEffect(product="A"))
+
+    mocked_load_offers.return_value = [offer_for_self_removal]
+    sku_string = "AAA"
+    
+    assert checkout_solution.checkout(sku_string) == 200 + 50
