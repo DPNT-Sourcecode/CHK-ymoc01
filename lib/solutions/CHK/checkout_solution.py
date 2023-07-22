@@ -22,6 +22,9 @@ def checkout(skus: str) -> int:
         offers_for_product = all_offers.get(product)
         if offers_for_product:
             offer_price, offer_adjusted_count, products_to_remove = calculate_price_of_offers(offers_for_product, count)
+            for product in products_to_remove:
+                if product in skus:
+                    basket_total -= prices[product]
             basket_total += offer_price
 
         try:
@@ -51,4 +54,5 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
 
 
     return total_offer_price, count_after_offers, free_products
+
 
