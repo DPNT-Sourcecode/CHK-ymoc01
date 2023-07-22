@@ -151,7 +151,4 @@ def test_group_discount_offer_apply_correctly_calculates_discount_and_removes_sk
 
     skus = "ABCDE"
 
-    assert discount_offer.apply(skus) == 30, "DE"
-
-
-
+    assert discount_offer.apply(skus) == (30, "DE")

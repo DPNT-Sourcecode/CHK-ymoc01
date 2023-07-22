@@ -56,9 +56,20 @@ class GroupDiscountOffer(Offer):
     def apply(self, skus: str) -> tuple[int, str]:
         times_to_apply = self.times_offer_can_be_applied(skus)
 
-        while times_to_apply > 0:
-            
-        return 0, skus
+        breakpoint()
+        skus_after_processing = ""
+        for sku in skus:
+            if times_to_apply <= 0:
+                break
+
+            if sku not in self.multibuy_group:
+                skus_after_processing += sku
+                continue
+
+            times_to_apply -= 1
+
+        
+        return self.price * times_to_apply, skus_after_processing
 
 class Basket(BaseModel):
     skus: str
@@ -147,8 +158,3 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
-
-
-
-
-

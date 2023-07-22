@@ -185,4 +185,3 @@ def test_checkout_for_basket_with_V_rule_2():
     sku_string = "VVV"
     
     assert checkout_solution.checkout(sku_string) == 130
-
