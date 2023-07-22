@@ -59,6 +59,7 @@ class GroupDiscountOffer(Offer):
 
         skus_after_processing = ""
         for sku in skus:
+            breakpoint()
             if quantity_to_remove <= 0:
                 break
 
@@ -158,3 +159,4 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
