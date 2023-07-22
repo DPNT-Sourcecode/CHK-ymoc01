@@ -12,3 +12,6 @@ def checkout(skus: str) -> int:
     basket = models.Basket(skus=skus, prices=prices, offers=offers)
 
     return basket.calculate_price()
+
+def order_skus_by_highest_to_lowest_price(skus: str, prices: dict[str, int]):
+    ...

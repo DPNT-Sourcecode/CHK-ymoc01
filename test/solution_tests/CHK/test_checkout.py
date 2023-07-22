@@ -94,6 +94,7 @@ def test_checkout_for_basket_where_offers_remove_the_product_when_count_even_has
 
     assert checkout_solution.checkout(sku_string) == 30
 
+def test_order_skus_by_highest_to_lowest_price()
 
 # Explicit rule testing for CHK_R4
 def test_checkout_for_basket_A_rule_1():
@@ -186,7 +187,7 @@ def test_checkout_for_basket_with_V_rule_2():
     assert checkout_solution.checkout(sku_string) == 130
 
 @pytest.mark.parametrize(
-    "skus", 
+    "sku_string", 
     [
         "STXYZ",
         "TXYZS",
@@ -195,8 +196,6 @@ def test_checkout_for_basket_with_V_rule_2():
         "ZSTXY"
     ]
 )
-def test_checkout_for_basket_with_group_discount():
-    sku_string = "STXYZ"
-
+def test_checkout_for_basket_with_group_discount(sku_string):
     # The cheapest pair, plus the price of the offer
     assert checkout_solution.checkout(sku_string) == 37 + 45
