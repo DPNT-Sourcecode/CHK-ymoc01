@@ -15,7 +15,7 @@ class Offer(BaseModel):
         
         return int(count / self.quantity)
 
-class PriceOffer(Offer):
+class DiscountOffer(Offer):
     price: int
 
     def apply(self, skus: str) -> tuple[int, str]:
@@ -86,7 +86,7 @@ class Basket(BaseModel):
     def _apply_offers(self, skus: str) -> tuple[int, str]:
         offers_with_discount = [
             offer for offer in self.offers 
-            if isinstance(offer, PriceOffer)
+            if isinstance(offer, DiscountOffer)
         ]
         total_offer_price = 0
         skus_after_processing = skus
@@ -102,7 +102,7 @@ class Basket(BaseModel):
             offer_price, skus_after_processing = offer.apply(skus_after_processing)
             total_offer_price += offer_price
 
-        return skus_after_processing, total_offer_price
+        return total_offer_price, skus_after_processing
 
 
 def load_offers() -> dict[str, Offer]:
@@ -123,7 +123,7 @@ def load_offers() -> dict[str, Offer]:
                 mutlibuy_with_products=multibuy_with
             )
         else:
-            parsed_offer = PriceOffer(
+            parsed_offer = DiscountOffer(
                 product=offer["product"],
                 quantity=offer["quantity"], 
                 price=offer["price"],
@@ -132,5 +132,6 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
 

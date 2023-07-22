@@ -1,24 +1,24 @@
 
 from unittest.mock import patch
-from solutions.CHK.models import FreeProductOffer, PriceOffer, GroupDiscountOffer, load_offers
+from solutions.CHK.models import FreeProductOffer, DiscountOffer, GroupDiscountOffer, load_offers
 
 
 def test_offer_apply_returns_offer_price_and_empty_sku():
-    offer = PriceOffer(product="A", quantity=3, price=999)
+    offer = DiscountOffer(product="A", quantity=3, price=999)
     assert offer.apply("AAA") == (999, "")
 
 def test_offer_apply_no_offer_returns_zero_price_and_unchanged_sku():
-    offer = PriceOffer(product="A", quantity=999, price=999)
+    offer = DiscountOffer(product="A", quantity=999, price=999)
     assert offer.apply("A") == (0, "A")
 
 def test_offer_times_offer_can_be_applied_when_offer_can_be_applied_returns_greater_than_zero():
-    offer = PriceOffer(product="A", quantity=3, price=999)
+    offer = DiscountOffer(product="A", quantity=3, price=999)
     skus = "AAAAAAA"
 
     assert offer.times_offer_can_be_applied(skus) == 2
 
 def test_offer_times_offer_can_be_applied_when_offer_cant_be_applied_returns_zero():
-    offer = PriceOffer(product="A", quantity=3, price=999)
+    offer = DiscountOffer(product="A", quantity=3, price=999)
     skus = "A"
 
     assert offer.times_offer_can_be_applied(skus) == 0
@@ -37,7 +37,7 @@ def test_load_offers_correctly_loads_offer_as_object():
     assert len(loaded_offers) == 1
 
     loaded_offer = loaded_offers[0]
-    assert isinstance(loaded_offer, PriceOffer)
+    assert isinstance(loaded_offer, DiscountOffer)
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.price == 100
@@ -61,13 +61,13 @@ def test_load_offers_correctly_loads_multiple_offers_as_objects():
     assert len(loaded_offers) == 2
 
     loaded_offer = loaded_offers[0]
-    assert isinstance(loaded_offer, PriceOffer)
+    assert isinstance(loaded_offer, DiscountOffer)
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.price == 100
 
     loaded_offer = loaded_offers[1]
-    assert isinstance(loaded_offer, PriceOffer)
+    assert isinstance(loaded_offer, DiscountOffer)
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 50
     assert loaded_offer.price == 75
@@ -111,4 +111,7 @@ def test_load_offers_correctly_loads_offer_with_multibuy_products():
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.mutlibuy_with_products == ["B", "C"]
+
+
+
 

@@ -1,7 +1,7 @@
 
 from unittest.mock import patch
 from solutions.CHK import checkout_solution
-from solutions.CHK.models import PriceOffer, FreeProductOffer
+from solutions.CHK.models import DiscountOffer, FreeProductOffer
 
 # TODO what happens if the prices change, which reqs say offers do weekly
 # fixtures and patching probably quickest way around this, prefer factoryboy
@@ -42,8 +42,8 @@ def test_checkout_for_basket_with_lots_of_products_with_overlapping_rules():
     }
 )
 def test_checkout_for_basket_where_mutliple_offers_for_same_product_prioritises_high_quantity(mocked_load_offers):
-    offer_for_three = PriceOffer(product="A", quantity=3, price=130)
-    offer_for_five = PriceOffer(product="A", quantity=5, price=200)
+    offer_for_three = DiscountOffer(product="A", quantity=3, price=130)
+    offer_for_five = DiscountOffer(product="A", quantity=5, price=200)
 
     mocked_load_offers.return_value = [offer_for_three, offer_for_five]
     sku_string = "AAAAAA"
@@ -185,3 +185,4 @@ def test_checkout_for_basket_with_V_rule_2():
     sku_string = "VVV"
     
     assert checkout_solution.checkout(sku_string) == 130
+
