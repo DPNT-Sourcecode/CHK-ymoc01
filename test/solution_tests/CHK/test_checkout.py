@@ -20,20 +20,14 @@ def test_checkout_for_basket_with_unpriced_items_returns_minus_1():
     assert checkout_solution.checkout(sku_string) == -1
 
 def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
-    offer = {
-        "quantity": 3,
-        "price": 999,
-    }
     offer = Offer(quantity=3, price=999)
     assert checkout_solution.calculate_price_of_offers(offer, 3) == (999, 0)
 
 def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
-    offer = {
-        "quantity": 999,
-        "price": 999,
-    }
+    offer = Offer(quantity=999, price=999)
     assert checkout_solution.calculate_price_of_offers(offer, 1) == (0, 1)
 
 def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
     ...
     
+

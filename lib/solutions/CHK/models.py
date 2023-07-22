@@ -11,4 +11,7 @@ class Offer(BaseModel):
     price: int
     side_effect: Optional[FreeProductSideEffect] = None
 
+    def apply(count: int) -> tuple(int, int)
+
+
 

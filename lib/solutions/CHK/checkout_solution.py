@@ -1,6 +1,7 @@
 
 
 from collections import defaultdict
+from solutions.CHK.models import Offer
 from solutions.CHK.static_prices import ITEM_PRICES, OFFERS
 
 # noinspection PyUnusedLocal
@@ -32,13 +33,11 @@ def checkout(skus: str) -> int:
 
     return basket_total
 
-def calculate_price_of_offers(offer: dict[str, int], count: int) -> tuple[int, int]:
-    offer_quantity = offer["quantity"]
-
+def calculate_price_of_offers(offer: Offer, count: int) -> tuple[int, int]:
     # Dividing and then rounding down, thereby dropping any remainder
-    number_of_offer_occurences = int(count / offer_quantity)
+    number_of_offer_occurences = int(count / offer.quantity)
 
-    offers_price = number_of_offer_occurences * offer["price"]
-    count_after_offers = count - (offer_quantity * int(count / offer_quantity))
+    offers_price = number_of_offer_occurences * offer.price
+    count_after_offers = count - (offer.quantity * int(count / offer.quantity))
 
     return offers_price, count_after_offers
