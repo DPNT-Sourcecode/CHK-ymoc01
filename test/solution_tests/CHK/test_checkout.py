@@ -36,7 +36,7 @@ def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity
     offers = [offer_for_three, offer_for_five]
     count = 6
 
-    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, count)
+    total_offer_price, count_after_offers, _ = checkout_solution.calculate_price_of_offers(offers, count)
 
     assert total_offer_price == 200
     assert count_after_offers == 1
@@ -48,7 +48,7 @@ def test_calculate_price_of_offers_for_multiple_offers_calculates_applies_both_o
     offers = [offer_for_three, offer_for_five]
     count = 9
 
-    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, count)
+    total_offer_price, count_after_offers, _ = checkout_solution.calculate_price_of_offers(offers, count)
 
     assert total_offer_price == 330
     assert count_after_offers == 1
@@ -62,7 +62,9 @@ def test_calculate_price_of_offers_with_side_effect_returns_products_for_removal
     total_offer_price, count_after_offers, products_for_removal = checkout_solution.calculate_price_of_offers(offers, count)
 
     assert total_offer_price == 80
-    assert count_after_offers == 1
+    assert count_after_offers == 0
+    assert products_for_removal == ["B"]
+
 
 
 
