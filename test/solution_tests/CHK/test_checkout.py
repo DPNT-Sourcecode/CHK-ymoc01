@@ -41,7 +41,7 @@ def test_checkout_for_basket_with_lots_of_products_with_overlapping_rules():
         "A": 50
     }
 )
-def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity(mocked_load_offers):
+def test_checkout_for_basket_where_mutliple_offers_for_same_product_prioritises_high_quantity(mocked_load_offers):
     offer_for_three = Offer(product="A", quantity=3, price=130)
     offer_for_five = Offer(product="A", quantity=5, price=200)
 
@@ -59,10 +59,15 @@ def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity
         "A": 10
     }
 )
-def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity(mocked_load_offers):
-    offer_for_self_removal = Offer(product="A", quantity=2, price=20, side_effect=FreeProductSideEffect(product="A"))
+def test_checkout_for_basket_where_offers_remove_the_offered_product(mocked_load_offers):
+    offer_for_self_removal = Offer(
+        product="A",
+        quantity=2,
+        price=20,
+        side_effect=FreeProductSideEffect(product="A")
+    )
 
     mocked_load_offers.return_value = [offer_for_self_removal]
     sku_string = "AAA"
     
-    assert checkout_solution.checkout(sku_string) == 200 + 50
+    assert checkout_solution.checkout(sku_string) == 20

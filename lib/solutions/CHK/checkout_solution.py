@@ -9,6 +9,7 @@ def checkout(skus: str) -> int:
     prices = static_prices.ITEM_PRICES
     offers = load_offers()
 
+    breakpoint()
     basket = Basket(skus=skus, prices=prices, offers=offers)
 
     return basket.calculate_price()
