@@ -87,7 +87,3 @@ def test_checkout_for_basket_with_free_product_which_has_offer_removes_offer():
 
 
 
-
-
-
-

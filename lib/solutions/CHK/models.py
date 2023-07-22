@@ -10,6 +10,7 @@ class FreeProductSideEffect(BaseModel):
     product: str
 
 class Offer(BaseModel):
+    product: str
     quantity: int
     price: int
     side_effect: Optional[FreeProductSideEffect] = None
@@ -21,6 +22,11 @@ class Offer(BaseModel):
         count_after_offers = count - (self.quantity * int(count / self.quantity))
 
         return offers_price, count_after_offers
+    
+    def can_be_applied(self, skus: str) -> bool:
+        if skus.count(self.product) >= self.quantity:
+            return True
+        return False
 
 class Basket(BaseModel):
     skus: str
@@ -60,6 +66,9 @@ class Basket(BaseModel):
     def _apply_free_products(self):
         for product, offers in self.offers.items():
             offers_with_free_product = [offer for offer in offers if offer.side_effect is not None]
+
+            for offer_with_free_product in offers_with_free_product:
+                if 
         free_product_offers = [offer for offer in ]
 
     def _apply_offers(self, offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
@@ -99,7 +108,3 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
-
-
-
-

@@ -13,8 +13,3 @@ def checkout(skus: str) -> int:
     basket = Basket(skus=skus, prices=prices, offers=offers)
 
     return basket.calculate_price()
-
-
-
-
-
