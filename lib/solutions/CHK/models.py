@@ -23,7 +23,8 @@ class Offer(BaseModel):
     
     def times_offer_can_be_applied(self, skus: str) -> int:
         count = skus.count(self.product)
-        if count >= self.quantity:
+
+        if count < self.quantity:
             return int(count / self.quantity)
         return 0
 
@@ -62,7 +63,9 @@ class Basket(BaseModel):
                 if product_to_remove != offer_with_free_product.product:
                     skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
                 else:
-                    if 
+                    possible_removal_count = skus_after_processing.count(product_to_remove) % \
+                        offer_with_free_product.quantity
+                    while possible_removal_count > 0
         
         return skus_after_processing
 
@@ -109,4 +112,5 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
