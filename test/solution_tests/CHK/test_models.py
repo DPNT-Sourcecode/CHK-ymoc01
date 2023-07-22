@@ -1,15 +1,15 @@
 
 from unittest.mock import patch
-from solutions.CHK.models import FreeProductOffer, PriceOffer, MultibuyOffer, load_offers
+from solutions.CHK.models import FreeProductOffer, PriceOffer, GroupDiscountOffer, load_offers
 
 
-def test_offer_apply_returns_offer_price_and_adjusted_count():
+def test_offer_apply_returns_offer_price_and_empty_sku():
     offer = PriceOffer(product="A", quantity=3, price=999)
-    assert offer.apply("AAA") == (999, 3)
+    assert offer.apply("AAA") == (999, "")
 
-def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
+def test_offer_apply_no_offer_returns_zero_price_and_unchanged_sku():
     offer = PriceOffer(product="A", quantity=999, price=999)
-    assert offer.apply("A") == (0, 0)
+    assert offer.apply("A") == (0, "A")
 
 def test_offer_times_offer_can_be_applied_when_offer_can_be_applied_returns_greater_than_zero():
     offer = PriceOffer(product="A", quantity=3, price=999)
@@ -106,8 +106,9 @@ def test_load_offers_correctly_loads_offer_with_multibuy_products():
     assert len(loaded_offers) == 1
 
     loaded_offer = loaded_offers[0]
-    assert isinstance(loaded_offer, MultibuyOffer)
+    assert isinstance(loaded_offer, GroupDiscountOffer)
 
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.mutlibuy_with_products == ["B", "C"]
+

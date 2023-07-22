@@ -37,14 +37,14 @@ class FreeProductOffer(Offer):
             self.free_product, "", self.times_offer_can_be_applied(skus)
         )
 
-class MultibuyOffer(Offer):
+class GroupDiscountOffer(Offer):
     mutlibuy_with_products: list[str]
 
     def times_offer_can_be_applied(self, skus: str) -> int:
-        ...
+        return 0
 
     def apply(self, skus: str) -> tuple[int, str]:
-        ...
+        return 0, skus
 
 class Basket(BaseModel):
     skus: str
@@ -56,7 +56,7 @@ class Basket(BaseModel):
 
         skus_to_process = self._apply_free_products(skus_to_process)
 
-        skus_to_process, offer_price = self._apply_offers(skus_to_process)
+        offer_price, skus_to_process = self._apply_offers(skus_to_process)
 
         basket_total = offer_price
         for sku in skus_to_process:
@@ -67,7 +67,8 @@ class Basket(BaseModel):
 
         return basket_total
 
-    def _apply_group_discounts(self, skus: str) -> tuple[str, int]:
+    def _apply_group_discounts(self, skus: str) -> tuple[int, str]:
+        return 0, skus
 
     def _apply_free_products(self, skus: str) -> str:
         offers_with_free_product = [
@@ -82,7 +83,7 @@ class Basket(BaseModel):
         
         return skus_after_processing
 
-    def _apply_offers(self, skus: str) -> tuple[str, int]:
+    def _apply_offers(self, skus: str) -> tuple[int, str]:
         offers_with_discount = [
             offer for offer in self.offers 
             if isinstance(offer, PriceOffer)
@@ -116,7 +117,7 @@ def load_offers() -> dict[str, Offer]:
                 free_product=free_product
             )
         elif multibuy_with := offer.get("multibuy_with"):
-            parsed_offer = MultibuyOffer(
+            parsed_offer = GroupDiscountOffer(
                 product=offer["product"],
                 quantity=offer["quantity"],
                 mutlibuy_with_products=multibuy_with
@@ -131,4 +132,5 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
