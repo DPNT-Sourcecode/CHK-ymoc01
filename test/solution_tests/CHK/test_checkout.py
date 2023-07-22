@@ -53,6 +53,19 @@ def test_calculate_price_of_offers_for_multiple_offers_calculates_applies_both_o
     assert total_offer_price == 330
     assert count_after_offers == 1
 
+def test_calculate_price_of_offers_with_side_effect_returns_products_for_removal():
+    offer_for_three = Offer(quantity=3, price=130)
+    offer_for_five = Offer(quantity=5, price=200)
+
+    offers = [offer_for_three, offer_for_five]
+    count = 9
+
+    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, count)
+
+    assert total_offer_price == 330
+    assert count_after_offers == 1
+
+
 
 
 
