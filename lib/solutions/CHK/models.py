@@ -35,9 +35,9 @@ class Basket(BaseModel):
     def calculate_price(self):
         skus_to_process = self.skus
 
-        skus_to_process = self.apply_free_products(skus_to_process)
+        skus_to_process = self._apply_free_products(skus_to_process)
 
-        skus_to_process, offer_price = self.apply_offers(skus_to_process)
+        skus_to_process, offer_price = self._apply_offers(skus_to_process)
 
         basket_total = offer_price
         for sku in skus_to_process:
@@ -48,7 +48,7 @@ class Basket(BaseModel):
 
         return basket_total
 
-    def apply_free_products(self, skus: str):
+    def _apply_free_products(self, skus: str):
         offers_with_free_product = [
             offer for offer in self.offers 
             if offer.side_effect is not None
@@ -65,7 +65,7 @@ class Basket(BaseModel):
         
         return skus_after_processing
 
-    def apply_offers(self, skus: str) -> tuple[str, int]:
+    def _apply_offers(self, skus: str) -> tuple[str, int]:
         total_offer_price = 0
         skus_after_processing = skus
 
@@ -108,4 +108,5 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
