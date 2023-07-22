@@ -8,7 +8,7 @@ from solutions.CHK.static_prices import ITEM_PRICES
 # skus = unicode string
 def checkout(skus: str) -> int:
     prices = ITEM_PRICES
-    offers = load_offers()
+    all_offers = load_offers()
 
     # For now, assuming SKUs are structured like AAABCAD
     product_counts = defaultdict(int)
@@ -19,9 +19,9 @@ def checkout(skus: str) -> int:
     for product, count in product_counts.items():
         offer_adjusted_count = count
 
-        offer = offers.get(product)
-        if offer:
-            offer_price, offer_adjusted_count = calculate_price_of_offers(offer, count)
+        offers_for_product = all_offers.get(product)
+        if offers_for_product:
+            offer_price, offer_adjusted_count = calculate_price_of_offers(offers_for_product, count)
             basket_total += offer_price
 
         try:
@@ -42,4 +42,5 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
         total_offer_price += offer_price
 
     return total_offer_price, count_after_offers
+
 

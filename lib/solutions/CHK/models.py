@@ -1,5 +1,6 @@
 
 
+from collections import defaultdict
 from typing import Optional
 from pydantic import BaseModel
 
@@ -23,7 +24,7 @@ class Offer(BaseModel):
     
 def load_offers() -> dict[str, Offer]:
     offers = static_prices.OFFERS
-    parsed_offers = {}
+    parsed_offers = defaultdict(list)
 
     for product, offer in offers.items():
         if free_product := offer.get("free_product"):
@@ -31,11 +32,14 @@ def load_offers() -> dict[str, Offer]:
         else:
             side_effect = None
 
-        parsed_offers[product] = Offer(
-            quantity=offer["quantity"], 
-            price=offer["price"],
-            side_effect=side_effect
+        parsed_offers[product].append(
+            Offer(
+                quantity=offer["quantity"], 
+                price=offer["price"],
+                side_effect=side_effect
+            )
         )
     
     return parsed_offers
+
 
