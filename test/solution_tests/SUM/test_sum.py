@@ -11,22 +11,30 @@ class TestSum():
         [
             (100, 1), 
             (1, 100),
-            (100, 100)
+            (100, 100),
+            (1000, 1), 
+            (1, 1000),
+            (1000, 1000)
         ]
     )
-    def test_sum_of_numbers_greater_than_100_raises_exception(self, first_integer, second_integer):
-        with pytest.raises(ValueError):
+    def test_sum_of_numbers_100_or_greater_raises_exception(self, first_integer, second_integer):
+        with pytest.raises(ValueError) as exception:
             sum_solution.compute(first_integer, second_integer)
+
+        assert str(exception) == "Inputs must be less than 100"
 
     @pytest.mark.parametrize(
         "first_integer, second_integer", 
         [
             (0, 99), 
             (99, 0),
-            (0, 0)
+            (0, 0),
+            (-100, 99), 
+            (99, -100),
+            (-100, -100)
         ]
     )
-    def test_sum_of_numbers_greater_than_100_raises_exception(self, first_integer, second_integer):
+    def test_sum_of_numbers_0_or_less_raises_exception(self, first_integer, second_integer):
         with pytest.raises(ValueError):
             sum_solution.compute(first_integer, second_integer)
 
