@@ -51,6 +51,6 @@ class TestSum():
     )
     def test_sum_with_invalid_types_raises_exception(self, first_argument, second_argument):
         with pytest.raises(TypeError) as exception:
-            sum_solution.compute("9", 1)
+            sum_solution.compute(first_argument, second_argument)
         
         assert str(exception.value) == "Inputs must be integers"
