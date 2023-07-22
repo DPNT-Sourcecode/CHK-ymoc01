@@ -48,13 +48,12 @@ OFFERS = [
     {"product": "U", "quantity": 4, "free_product": "U"},
     {"product": "V", "quantity": 2, "price": 90},
     {"product": "V", "quantity": 3, "price": 130},
-    {"product": "S", "quantity": 1, "price": 45, "multibuy_with": ["T","X","Y","Z"]}
-    {"product": "T", "quantity": 1, "price": 45, "multibuy_with": ["S","X","Y","Z"]}
-    {"product": "X", "quantity": 1, "price": 45, "multibuy_with": ["T","S","Y","Z"]}
-    {"product": "Y", "quantity": 1, "price": 45, "multibuy_with": ["T","X","S","Z"]}
-    {"product": "Z", "quantity": 1, "price": 45, "multibuy_with": ["T","X","Y","S"]}
-
-
+    {"product": "S", "quantity": 3, "price": 45, "multibuy_with": ["T","X","Y","Z"]},
+    {"product": "T", "quantity": 3, "price": 45, "multibuy_with": ["S","X","Y","Z"]},
+    {"product": "X", "quantity": 3, "price": 45, "multibuy_with": ["T","S","Y","Z"]},
+    {"product": "Y", "quantity": 3, "price": 45, "multibuy_with": ["T","X","S","Z"]},
+    {"product": "Z", "quantity": 3, "price": 45, "multibuy_with": ["T","X","Y","S"]},
 ]
+
 
 

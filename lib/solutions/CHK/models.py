@@ -22,7 +22,7 @@ class PriceOffer(Offer):
         number_of_offer_occurences = int(count / self.quantity)
 
         offers_price = number_of_offer_occurences * self.price
-        count_to_remove = (self.quantity * int(count / self.quantity))
+        count_to_remove = (self.quantity * self.times_offer_can_be_applied())
 
         return offers_price, count_to_remove
 
@@ -36,6 +36,18 @@ class FreeProductOffer(Offer):
             self.free_product, "", self.times_offer_can_be_applied(skus)
         )
 
+class MultibuyOffer(Offer):
+    mutlibuy_with_products: list[str]
+
+    def times_offer_can_be_applied(self, skus: str) -> int:
+        count = skus.count(self.product)
+
+        if count < self.quantity:
+            return 0
+        
+        return int(count / self.quantity)
+
+    def apply(self, skus: str) -> tuple[int, int]
 
 class Basket(BaseModel):
     skus: str
