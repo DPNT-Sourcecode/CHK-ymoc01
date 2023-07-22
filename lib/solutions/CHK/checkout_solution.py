@@ -21,7 +21,7 @@ def checkout(skus: str) -> int:
 
         offers_for_product = all_offers.get(product)
         if offers_for_product:
-            offer_price, offer_adjusted_count = calculate_price_of_offers(offers_for_product, count)
+            offer_price, offer_adjusted_count, products_to_remove = calculate_price_of_offers(offers_for_product, count)
             basket_total += offer_price
 
         try:
@@ -33,11 +33,13 @@ def checkout(skus: str) -> int:
 
     return basket_total
 
-# This signature is becoming absolutely grim
+# This signature is becoming absolutely grim, refactor into something which knows about
+# the overarching list of products, perhaps Basket model
 def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
     total_offer_price = 0
     count_after_offers = count
     free_products = []
+
     # At the moment, highest quantity offers benefit customer more, so prioritise those
     sorted_offers = sorted(offers, key=lambda x: x.quantity, reverse=True)
     for offer in sorted_offers:
@@ -48,4 +50,5 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
             free_products.append(offer.side_effect.product)
 
 
-    return total_offer_price, count_after_offers
+    return total_offer_price, count_after_offers, free_products
+
