@@ -31,3 +31,7 @@ def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged
         "price": 999,
     }
     assert checkout_solution.calculate_price_of_offers(offer, 1) == (0, 1)
+
+def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
+    ...
+    
