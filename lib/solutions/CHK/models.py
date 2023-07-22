@@ -32,7 +32,9 @@ class FreeProductOffer(Offer):
     def apply(self, skus: str) -> str:
         skus_after_processing = skus
 
-        return skus_after_processing.replace(self.free_product, "", self.times_offer_can_be_applied(skus))
+        return skus_after_processing.replace(
+            self.free_product, "", self.times_offer_can_be_applied(skus)
+        )
 
 
 class Basket(BaseModel):
@@ -117,5 +119,6 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
 
