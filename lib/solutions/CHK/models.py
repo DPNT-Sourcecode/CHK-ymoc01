@@ -31,11 +31,9 @@ class FreeProductOffer(Offer):
 
     def apply(self, skus: str) -> str:
         skus_after_processing = skus
-        for _ in range(self.times_offer_can_be_applied(skus)):
-            product_to_remove = self.free_product
-            skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
-        
-        return skus
+
+        return skus_after_processing.replace(self.free_product, "", self.times_offer_can_be_applied(skus))
+
 
 class Basket(BaseModel):
     skus: str
@@ -119,4 +117,5 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
