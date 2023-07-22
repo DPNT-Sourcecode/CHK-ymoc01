@@ -40,30 +40,15 @@ class Basket(BaseModel):
         skus_to_process = self._apply_free_products(skus_to_process)
 
         skus_to_process, offer_value = self._apply_offers(skus_to_process)
-        # product_counts = defaultdict(int)
-        # for sku in self.skus:
-        #     product_counts[sku] += 1
 
-        # basket_total = 0
-        # for product, count in product_counts.items():
-        #     offer_adjusted_count = count
+        basket_total = offer_value
+        for sku in skus_to_process:
+            try:
+                basket_total += self.prices[sku]
+            except KeyError:
+                return -1
 
-        #     offers_for_product = self.offers.get(product)
-        #     if offers_for_product:
-        #         offer_price, offer_adjusted_count, products_to_remove = self._apply_offers(offers_for_product, count)
-        #         for product in products_to_remove:
-        #             if product in self.skus:
-        #                 basket_total -= self.prices[product]
-        #         basket_total += offer_price
-
-        #     try:
-        #         product_price = self.prices[product]
-        #     except KeyError:
-        #         return -1
-            
-        #     basket_total += offer_adjusted_count * product_price
-
-        # return basket_total
+        return basket_total
 
 
     def _apply_free_products(self, skus: str):
@@ -88,10 +73,10 @@ class Basket(BaseModel):
         sorted_offers = sorted(self.offers, key=lambda x: x.quantity, reverse=True)
         for offer in sorted_offers:
             count = skus_after_processing.count(offer.product)
-            offer_price, count_to_remove = offer.apply(count_after_offers)
+            offer_price, count_to_remove = offer.apply(count)
             total_offer_price += offer_price
 
-
+            skus_after_processing.replace(offer.product, "", count_to_remove)
 
         return skus_after_processing, total_offer_price
 
@@ -116,6 +101,7 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
 
