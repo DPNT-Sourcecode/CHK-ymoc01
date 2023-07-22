@@ -13,7 +13,7 @@ def checkout(skus: str) -> int:
     product_counts = defaultdict(int)
     for sku in skus:
         product_counts[sku] += 1
- 
+    breakpoint()
     basket_total = 0
     for product, count in product_counts.items():
         offer_adjusted_count = count
