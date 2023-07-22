@@ -89,6 +89,6 @@ def test_checkout_for_basket_where_offers_remove_the_offered_product_and_applies
     )
 
     mocked_load_offers.return_value = [offer_for_self_removal]
-    sku_string = "AAA"
+    sku_string = "AAAAA"
     
-    assert checkout_solution.checkout(sku_string) == 20
+    assert checkout_solution.checkout(sku_string) == 30

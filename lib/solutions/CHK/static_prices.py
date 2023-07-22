@@ -5,6 +5,7 @@ ITEM_PRICES = {
     "C": 20,
     "D": 15,
     "E": 40,
+    "F": 10
 }
 
 OFFERS = [
@@ -28,5 +29,11 @@ OFFERS = [
         "quantity": 2,
         "price": 80,
         "free_product": "B"
+    },
+    {
+        "product": "F",
+        "quantity": 2,
+        "price": 20,
+        "free_product": "F"
     }
 ]
