@@ -47,7 +47,8 @@ class MultibuyOffer(Offer):
         
         return int(count / self.quantity)
 
-    def apply(self, skus: str) -> tuple[int, int]
+    def apply(self, skus: str) -> tuple[int, int]:
+        ...
 
 class Basket(BaseModel):
     skus: str
@@ -120,6 +121,12 @@ def load_offers() -> dict[str, Offer]:
                 product=offer["product"],
                 quantity=offer["quantity"],
                 free_product=free_product
+            )
+        elif multibuy_with := offer.get("multibuy_with"):
+            parsed_offer = MultibuyOffer(
+                product=offer["product"],
+                quantity=offer["quantity"],
+                mutlibuy_with_products=multibuy_with
             )
         else:
             parsed_offer = PriceOffer(

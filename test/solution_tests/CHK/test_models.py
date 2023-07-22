@@ -91,3 +91,23 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.free_product == "B"
+
+@patch(
+    "solutions.CHK.static_prices.OFFERS", [
+        {
+            "product": "A",
+            "quantity": 25,
+            "multibuy_with": ["B", "C"]
+        },
+    ]
+)
+def test_load_offers_correctly_loads_offer_with_multibuy_products():
+    loaded_offers = load_offers()
+    assert len(loaded_offers) == 1
+
+    loaded_offer = loaded_offers[0]
+    assert isinstance(loaded_offer, FreeProductOffer)
+
+    assert loaded_offer.product == "A"
+    assert loaded_offer.quantity == 25
+    assert loaded_offer.free_product == "B"
