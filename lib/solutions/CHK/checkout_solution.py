@@ -14,4 +14,12 @@ def checkout(skus: str) -> int:
     return basket.calculate_price()
 
 def order_skus_by_highest_to_lowest_price(skus: str, prices: dict[str, int]):
-    ...
+    skus_and_prices = []
+
+    for sku in skus:
+        skus_and_prices.append((sku, prices[sku]))
+
+    ordered_skus_and_prices = sorted(skus_and_prices, key=lambda x: x[1])
+
+    ordered_skus = [sku for sku, _  in ordered_skus_and_prices]
+    return 
