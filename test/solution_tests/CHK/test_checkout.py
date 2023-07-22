@@ -71,3 +71,24 @@ def test_checkout_for_basket_where_offers_remove_the_offered_product(mocked_load
     sku_string = "AAA"
     
     assert checkout_solution.checkout(sku_string) == 20
+
+@patch(
+    "solutions.CHK.models.load_offers"
+)
+@patch(
+    "solutions.CHK.static_prices.ITEM_PRICES", {
+        "A": 10
+    }
+)
+def test_checkout_for_basket_where_offers_remove_the_offered_product_and_applies_offer(mocked_load_offers):
+    offer_for_self_removal = Offer(
+        product="A",
+        quantity=2,
+        price=20,
+        side_effect=FreeProductSideEffect(product="A")
+    )
+
+    mocked_load_offers.return_value = [offer_for_self_removal]
+    sku_string = "AAA"
+    
+    assert checkout_solution.checkout(sku_string) == 20
