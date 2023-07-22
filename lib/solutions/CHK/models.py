@@ -53,24 +53,16 @@ class Basket(BaseModel):
             offer for offer in self.offers 
             if offer.side_effect is not None
         ]
-
-        products_to_remove = []
-        products_to_remove_from_self_removing_offers = []
+        skus_after_processing = skus
 
         for offer_with_free_product in offers_with_free_product:
-            if products_to_remove == offer_with_free_product.product:
-                removal_list = products_to_remove_from_self_removing_offers
-            else:
-                removal_list = products_to_remove
-
             for _ in range(offer_with_free_product.times_offer_can_be_applied(skus)):
                 product_to_remove = offer_with_free_product.side_effect.product
 
-                removal_list.append(product_to_remove)
-
-        skus_after_processing = skus
-        for product in products_to_remove:
-            skus_after_processing = skus_after_processing.replace(product, "", 1)
+                if product_to_remove != offer_with_free_product.product:
+                    skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
+                else:
+                    if 
         
         return skus_after_processing
 
@@ -117,3 +109,4 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
