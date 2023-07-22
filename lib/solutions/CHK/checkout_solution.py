@@ -1,6 +1,5 @@
 
 
-from typing import List
 from solutions.CHK.static_prices import ITEM_PRICES, OFFERS
 
 # noinspection PyUnusedLocal
@@ -10,8 +9,14 @@ def checkout(skus: str) -> int:
     offers = OFFERS
 
     # For now, assuming SKUs are structured like AAABCAD
-    sum = 0
+    basket_total = 0
     for sku in skus:
+        try:
+            basket_total += prices[sku]
+        except KeyError:
+            return -1
+        
+    return basket_total
 
 
 
