@@ -33,14 +33,13 @@ class Basket(BaseModel):
     offers: list[Offer]
 
     def calculate_price(self):
-        breakpoint()
         skus_to_process = self.skus
 
         skus_to_process = self._apply_free_products(skus_to_process)
 
-        skus_to_process, offer_value = self._apply_offers(skus_to_process)
+        skus_to_process, offer_price = self._apply_offers(skus_to_process)
 
-        basket_total = offer_value
+        basket_total = offer_price
         for sku in skus_to_process:
             try:
                 basket_total += self.prices[sku]
@@ -74,7 +73,7 @@ class Basket(BaseModel):
             offer_price, count_to_remove = offer.apply(count)
             total_offer_price += offer_price
 
-            skus_after_processing.replace(offer.product, "", count_to_remove)
+            skus_after_processing = skus_after_processing.replace(offer.product, "", count_to_remove)
 
         return skus_after_processing, total_offer_price
 
@@ -99,11 +98,3 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
-
-
-
-
-
-
-
-

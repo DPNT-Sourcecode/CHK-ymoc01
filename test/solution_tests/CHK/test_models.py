@@ -92,7 +92,3 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert loaded_offer.price == 100
     assert loaded_offer.side_effect != None
     assert loaded_offer.side_effect.product == "B"
-
-
-
-
