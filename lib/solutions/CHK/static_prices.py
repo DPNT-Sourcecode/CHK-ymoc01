@@ -49,5 +49,3 @@ OFFERS = [
     {"product": "V", "quantity": 2, "price": 90},
     {"product": "V", "quantity": 3, "price": 130},
 ]
-
-
