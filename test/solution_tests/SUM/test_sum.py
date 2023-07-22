@@ -21,7 +21,7 @@ class TestSum():
         with pytest.raises(ValueError) as exception:
             sum_solution.compute(first_integer, second_integer)
 
-        assert str(exception) == "Inputs must be less than 100"
+        assert str(exception.value) == "Inputs must be less than 100"
 
     @pytest.mark.parametrize(
         "first_integer, second_integer", 
@@ -35,7 +35,7 @@ class TestSum():
         ]
     )
     def test_sum_of_numbers_0_or_less_raises_exception(self, first_integer, second_integer):
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError) as exception:
             sum_solution.compute(first_integer, second_integer)
 
-
+        assert str(exception.value) == "Inputs must be greater than 0"
