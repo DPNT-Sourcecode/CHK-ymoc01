@@ -5,11 +5,11 @@ from solutions.CHK.models import FreeProductOffer, PriceOffer, MultibuyOffer, lo
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
     offer = PriceOffer(product="A", quantity=3, price=999)
-    assert offer.apply(3) == (999, 3)
+    assert offer.apply("AAA") == (999, 3)
 
 def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
     offer = PriceOffer(product="A", quantity=999, price=999)
-    assert offer.apply(1) == (0, 0)
+    assert offer.apply("A") == (0, 0)
 
 def test_offer_times_offer_can_be_applied_when_offer_can_be_applied_returns_greater_than_zero():
     offer = PriceOffer(product="A", quantity=3, price=999)

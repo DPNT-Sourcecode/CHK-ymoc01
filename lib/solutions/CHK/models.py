@@ -18,7 +18,7 @@ class Offer(BaseModel):
 class PriceOffer(Offer):
     price: int
 
-    def apply(self, skus: str) -> tuple[int, int]:
+    def apply(self, skus: str) -> tuple[int, str]:
         number_of_offer_occurences = self.times_offer_can_be_applied(skus)
 
         offers_price = number_of_offer_occurences * self.price
@@ -100,8 +100,7 @@ class Basket(BaseModel):
         )
 
         for offer in sorted_offers:
-            count = skus_after_processing.count(offer.product)
-            offer_price, count_to_remove = offer.apply(count)
+            offer_price, count_to_remove = offer.apply(skus_after_processing)
             total_offer_price += offer_price
 
             skus_after_processing = skus_after_processing.replace(

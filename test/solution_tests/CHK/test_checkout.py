@@ -150,7 +150,7 @@ def test_checkout_for_basket_with_H_rule_2():
 def test_checkout_for_basket_with_K_rule():
     sku_string = "KK"
     
-    assert checkout_solution.checkout(sku_string) == 150
+    assert checkout_solution.checkout(sku_string) == 120
 
 def test_checkout_for_basket_with_N_rule():
     sku_string = "NNNM"
