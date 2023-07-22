@@ -11,6 +11,13 @@ from solutions.CHK import checkout_solution
 def test_calculate_price_of_offers_for_single_offer_returns_offer_price():
     offer = {
         "quantity": 3,
-        "offer_price": 999,
+        "price": 999,
     }
     assert checkout_solution.calculate_price_of_offers(offer, 3) == 999
+
+def test_calculate_price_of_offers_for_no_offer_returns_zero():
+    offer = {
+        "quantity": 999,
+        "price": 999,
+    }
+    assert checkout_solution.calculate_price_of_offers(offer, 1) == 0

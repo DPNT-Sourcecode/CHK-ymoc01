@@ -33,4 +33,9 @@ def checkout(skus: str) -> int:
     return basket_total
 
 def calculate_price_of_offers(offer: dict[str, int], count: int) -> int:
-    ...
+    offer_quantity = offer["quantity"]
+
+    # Dividing and then rounding down, thereby dropping any remainder
+    number_of_offer_occurences = int(count / offer_quantity)
+
+    return number_of_offer_occurences * offer["price"]

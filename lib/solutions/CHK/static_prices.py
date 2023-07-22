@@ -9,10 +9,10 @@ ITEM_PRICES = {
 OFFERS = {
     "A": {
         "quantity": 3,
-        "offer_price": 130,
+        "price": 130,
     },
     "B": {
         "quantity": 2,
-          "offer_price": 45
+          "price": 45
     }
 }
