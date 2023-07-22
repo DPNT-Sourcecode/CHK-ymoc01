@@ -38,8 +38,7 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
     count_after_offers = count
 
     for offer in offers:
-        offer_price, count_after_offer = offer.apply(count_after_offers)
+        offer_price, count_after_offers = offer.apply(count_after_offers)
         total_offer_price += offer_price
-        count_after_offers -= count_after_offer
 
     return total_offer_price, count_after_offers

@@ -19,13 +19,13 @@ from solutions.CHK.models import Offer
 #     sku_string = "Z"
 #     assert checkout_solution.checkout(sku_string) == -1
 
-# def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
-#     offer = Offer(quantity=3, price=999)
-#     assert checkout_solution.calculate_price_of_offers([offer], 3) == (999, 0)
+def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
+    offer = Offer(quantity=3, price=999)
+    assert checkout_solution.calculate_price_of_offers([offer], 3) == (999, 0)
 
-# def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
-#     offer = Offer(quantity=999, price=999)
-#     assert checkout_solution.calculate_price_of_offers([offer], 1) == (0, 1)
+def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
+    offer = Offer(quantity=999, price=999)
+    assert checkout_solution.calculate_price_of_offers([offer], 1) == (0, 1)
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
     offer = Offer(quantity=3, price=999)
