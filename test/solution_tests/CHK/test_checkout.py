@@ -21,12 +21,25 @@ def test_checkout_for_basket_with_unpriced_items_returns_minus_1():
 
 def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
     offer = Offer(quantity=3, price=999)
-    assert checkout_solution.calculate_price_of_offers([offer], 3) == (999, 0)
+    offers = [offer]
+    assert checkout_solution.calculate_price_of_offers(offers, 3) == (999, 0)
 
 def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
     offer = Offer(quantity=999, price=999)
-    assert checkout_solution.calculate_price_of_offers([offer], 1) == (0, 1)
+    offers = [offer]
+    assert checkout_solution.calculate_price_of_offers(offers, 1) == (0, 1)
 
 def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
-    ...
+    offer_for_three = Offer(quantity=3, price=130)
+    offer_for_five = Offer(quantity=5, price=200)
+
+    offers = [offer_for_three, offer_for_five]
+    count = 6
+
+    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, 6)
+
+    assert total_offer_price == 200
+    assert count_after_offers == 1
+
+
 
