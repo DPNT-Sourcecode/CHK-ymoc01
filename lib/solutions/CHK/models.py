@@ -31,7 +31,7 @@ class Offer(BaseModel):
 class Basket(BaseModel):
     skus: str
     prices: dict[str, int]
-    offers: dict[str, list[Offer]]
+    offers: list[Offer]
 
     def calculate_price(self):
         skus_to_process = self.skus
@@ -63,13 +63,13 @@ class Basket(BaseModel):
         # return basket_total
 
 
-    def _apply_free_products(self):
-        for product, offers in self.offers.items():
-            offers_with_free_product = [offer for offer in offers if offer.side_effect is not None]
+    def _apply_free_products(self, skus: str):
+        offers_with_free_product = [offer for offer in self.offers if offer.side_effect is not None]
 
-            for offer_with_free_product in offers_with_free_product:
-                if 
-        free_product_offers = [offer for offer in ]
+        for offer_with_free_product in offers_with_free_product:
+            if offer_with_free_product.can_be_applied(skus):
+                ...
+
 
     def _apply_offers(self, offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
         total_offer_price = 0
@@ -91,7 +91,7 @@ class Basket(BaseModel):
 
 def load_offers() -> dict[str, Offer]:
     offers = static_prices.OFFERS
-    parsed_offers = defaultdict(list)
+    parsed_offers = []
 
     for offer in offers:
         if free_product := offer.get("free_product"):
@@ -99,8 +99,9 @@ def load_offers() -> dict[str, Offer]:
         else:
             side_effect = None
 
-        parsed_offers[offer["product"]].append(
+        parsed_offers.append(
             Offer(
+                product=offer["product"],
                 quantity=offer["quantity"], 
                 price=offer["price"],
                 side_effect=side_effect

@@ -4,7 +4,7 @@ from solutions.CHK.models import Offer, load_offers
 
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
-    offer = Offer(quantity=3, price=999)
+    offer = Offer(product="A", quantity=3, price=999)
     assert offer.apply(3) == (999, 0)
 
 def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():

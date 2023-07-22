@@ -1,7 +1,6 @@
 
 
-from collections import defaultdict
-from solutions.CHK.models import Basket, Offer, load_offers
+from solutions.CHK.models import Basket, load_offers
 from solutions.CHK.static_prices import ITEM_PRICES
 
 # noinspection PyUnusedLocal
