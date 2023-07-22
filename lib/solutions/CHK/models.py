@@ -49,7 +49,10 @@ class Basket(BaseModel):
         return basket_total
 
     def _apply_free_products(self, skus: str):
-        offers_with_free_product = [offer for offer in self.offers if offer.side_effect is not None]
+        offers_with_free_product = [
+            offer for offer in self.offers 
+            if offer.side_effect is not None
+        ]
 
         products_to_remove = []
         for offer_with_free_product in offers_with_free_product:
@@ -66,14 +69,21 @@ class Basket(BaseModel):
         total_offer_price = 0
         skus_after_processing = skus
 
-        # At the moment, highest quantity offers benefit customer more, so prioritise those
-        sorted_offers = sorted(self.offers, key=lambda x: x.quantity, reverse=True)
+        # Currently highest quantity offers benefit customer more, so prioritise those
+        sorted_offers = sorted(
+            self.offers, 
+            key=lambda x: x.quantity, 
+            reverse=True
+        )
+
         for offer in sorted_offers:
             count = skus_after_processing.count(offer.product)
             offer_price, count_to_remove = offer.apply(count)
             total_offer_price += offer_price
 
-            skus_after_processing = skus_after_processing.replace(offer.product, "", count_to_remove)
+            skus_after_processing = skus_after_processing.replace(
+                offer.product, "", count_to_remove
+            )
 
         return skus_after_processing, total_offer_price
 
