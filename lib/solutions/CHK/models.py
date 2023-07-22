@@ -61,31 +61,28 @@ class Basket(BaseModel):
     def _apply_free_products(self, skus: str):
         offers_with_free_product = [
             offer for offer in self.offers 
-            if offer.side_effect is not None
+            if isinstance(offer, FreeProductOffer)
         ]
         skus_after_processing = skus
 
         for offer_with_free_product in offers_with_free_product:
             for _ in range(offer_with_free_product.times_offer_can_be_applied(skus)):
-                product_to_remove = offer_with_free_product.side_effect.product
-
-                # if product_to_remove != offer_with_free_product.product:
+                product_to_remove = offer_with_free_product.free_product
                 skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
-                # else:
-                #     possible_removal_count = skus_after_processing.count(product_to_remove) % \
-                #         offer_with_free_product.quantity
-                #     if possible_removal_count > 0:
-                #         skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
         
         return skus_after_processing
 
     def _apply_offers(self, skus: str) -> tuple[str, int]:
+        offers_with_discount = [
+            offer for offer in self.offers 
+            if isinstance(offer, PriceOffer)
+        ]
         total_offer_price = 0
         skus_after_processing = skus
 
         # Currently highest quantity offers benefit customer more, so prioritise those
         sorted_offers = sorted(
-            self.offers, 
+            offers_with_discount, 
             key=lambda x: x.quantity, 
             reverse=True
         )
@@ -108,17 +105,18 @@ def load_offers() -> dict[str, Offer]:
 
     for offer in offers:
         if free_product := offer.get("free_product"):
-            side_effect = FreeProductSideEffect(product=free_product)
+            parsed_offer = FreeProductOffer(
+                product=offer["product"],
+                quantity=offer["quantity"],
+                free_product=free_product
+            )
         else:
-            side_effect = None
-
-        parsed_offers.append(
-            Offer(
+            parsed_offer = PriceOffer(
                 product=offer["product"],
                 quantity=offer["quantity"], 
                 price=offer["price"],
-                side_effect=side_effect
             )
-        )
+
+        parsed_offers.append(parsed_offer)
 
     return parsed_offers
