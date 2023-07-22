@@ -38,6 +38,7 @@ class Basket(BaseModel):
         skus_to_process = self.skus
 
         skus_to_process = self._apply_free_products(skus_to_process)
+
         # product_counts = defaultdict(int)
         # for sku in self.skus:
         #     product_counts[sku] += 1
@@ -72,6 +73,11 @@ class Basket(BaseModel):
             for _ in range(offer_with_free_product.times_offer_can_be_applied(skus)):
                 products_to_remove.append(offer_with_free_product.side_effect.product)
 
+        skus_after_processing = skus
+        for product in products_to_remove:
+            skus_after_processing = skus_after_processing.replace(product, "", 1)
+        
+        return skus_after_processing
 
     def _apply_offers(self, offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
         total_offer_price = 0
@@ -111,6 +117,7 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
 
