@@ -20,8 +20,8 @@ def checkout(skus: str) -> int:
 
         offer = offers.get(product)
         if offer:
-            basket_total += calculate_price_of_offers(offer, count)
-            offer_adjusted_count -= offer["quantity"] * int(count / offer["quantity"])
+            offer_price, offer_adjusted_count = calculate_price_of_offers(offer, count)
+            basket_total += offer_price
 
         try:
             product_price = prices[product]
@@ -32,7 +32,7 @@ def checkout(skus: str) -> int:
 
     return basket_total
 
-def calculate_price_of_offers(offer: dict[str, int], count: int) -> tuple(int, int):
+def calculate_price_of_offers(offer: dict[str, int], count: int) -> tuple[int, int]:
     offer_quantity = offer["quantity"]
 
     # Dividing and then rounding down, thereby dropping any remainder
@@ -40,4 +40,5 @@ def calculate_price_of_offers(offer: dict[str, int], count: int) -> tuple(int, i
 
     offers_price = number_of_offer_occurences * offer["price"]
     count_after_offers = count - (offer_quantity * int(count / offer_quantity))
-    return number_of_offer_occurences * offer["price"]
+
+    return offers_price, count_after_offers
