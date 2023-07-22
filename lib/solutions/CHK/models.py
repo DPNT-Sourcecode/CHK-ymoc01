@@ -58,9 +58,9 @@ class GroupDiscountOffer(Offer):
         quantity_to_remove = self.times_offer_can_be_applied(skus) * self.quantity
 
         skus_after_processing = ""
-        for sku in skus:
-            breakpoint()
+        for index, sku in enumerate(skus):
             if quantity_to_remove <= 0:
+                skus_after_processing += skus[index:]
                 break
 
             if sku not in self.multibuy_group:
@@ -82,7 +82,7 @@ class Basket(BaseModel):
 
         skus_to_process = self._apply_free_products(skus_to_process)
 
-        offer_price, skus_to_process = self._apply_offers(skus_to_process)
+        offer_price, skus_to_process = self._apply_discounts_offers(skus_to_process)
 
         basket_total = offer_price
         for sku in skus_to_process:
@@ -109,7 +109,7 @@ class Basket(BaseModel):
         
         return skus_after_processing
 
-    def _apply_offers(self, skus: str) -> tuple[int, str]:
+    def _apply_discounts_offers(self, skus: str) -> tuple[int, str]:
         offers_with_discount = [
             offer for offer in self.offers 
             if isinstance(offer, DiscountOffer)
@@ -130,6 +130,8 @@ class Basket(BaseModel):
 
         return total_offer_price, skus_after_processing
 
+    def _apply_group_discount_offers(self, skus: str) -> tuple[int, str]:
+        
 
 def load_offers() -> dict[str, Offer]:
     offers = static_prices.OFFERS
@@ -159,4 +161,5 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
