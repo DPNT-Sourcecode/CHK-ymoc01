@@ -27,13 +27,12 @@ OFFERS = [
     {
         "product": "E",
         "quantity": 2,
-        "price": 80,
         "free_product": "B"
     },
     {
         "product": "F",
         "quantity": 3,
-        "price": 20,
         "free_product": "F"
     }
 ]
+

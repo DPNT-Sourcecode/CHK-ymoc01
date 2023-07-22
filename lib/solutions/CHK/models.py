@@ -1,17 +1,22 @@
 
-from typing import Optional
 from pydantic import BaseModel
 
 from solutions.CHK import static_prices
 
-class FreeProductSideEffect(BaseModel):
-    product: str
-
 class Offer(BaseModel):
     product: str
     quantity: int
+
+    def times_offer_can_be_applied(self, skus: str) -> int:
+        count = skus.count(self.product)
+
+        if count < self.quantity:
+            return 0
+        
+        return int(count / self.quantity)
+
+class PriceOffer(Offer):
     price: int
-    side_effect: Optional[FreeProductSideEffect] = None
 
     def apply(self, count: int) -> tuple[int, int]:
         number_of_offer_occurences = int(count / self.quantity)
@@ -20,15 +25,17 @@ class Offer(BaseModel):
         count_to_remove = (self.quantity * int(count / self.quantity))
 
         return offers_price, count_to_remove
-    
-    def times_offer_can_be_applied(self, skus: str) -> int:
-        count = skus.count(self.product)
 
-        if count < self.quantity:
-            return 0
-        
-        return int(count / self.quantity)
-        
+class FreeProductOffer(Offer):
+    free_product: str
+
+    def apply(self, count: int) -> tuple[int, int]:
+        number_of_offer_occurences = int(count / self.quantity)
+
+        offers_price = number_of_offer_occurences * self.price
+        count_to_remove = (self.quantity * int(count / self.quantity))
+
+        return offers_price, count_to_remove
 
 class Basket(BaseModel):
     skus: str
