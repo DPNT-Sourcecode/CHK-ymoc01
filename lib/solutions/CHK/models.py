@@ -26,7 +26,13 @@ def load_offers() -> dict[str, Offer]:
     parsed_offers = []
 
     for product, offer in offers.items():
+        if free_product := offer.get("free_product"):
+            side_effect = FreeProductSideEffect(product=free_product)
+        else:
+            side_effect = None
+
         parsed_offers[product] = Offer(
             quantity=offer["quantity"], 
-            price=offer["price"]
+            price=offer["price"],
+            side_effect=side_effect
         )
