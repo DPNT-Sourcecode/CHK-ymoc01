@@ -18,7 +18,7 @@ def test_checkout_for_basket_with_offers_and_singles_returns_sum():
     assert checkout_solution.checkout(sku_string) == 180 + 75 + 20 + 30
 
 def test_checkout_for_basket_with_unpriced_items_returns_minus_1():
-    sku_string = "Z"
+    sku_string = "@"
     assert checkout_solution.checkout(sku_string) == -1
 
 def test_checkout_for_basket_with_free_product_removes_free_product_cost():
@@ -111,7 +111,18 @@ def test_checkout_for_basket_where_offers_remove_the_product_when_count_even_has
     
     assert checkout_solution.checkout(sku_string) == 30
 
-def test_checkout_for_basket_with_many_products():
-    sku_string = "ABCDEFGGGGPASJSOAMOINASODNSA"
+# Explicit rule testing for CHK_R4
+def test_checkout_for_basket_A_rule_1():
+    sku_string = "AAA"
     
-    assert checkout_solution.checkout(sku_string) == 30
+    assert checkout_solution.checkout(sku_string) == 130
+
+def test_checkout_for_basket_with_A_rule_1():
+    sku_string = "AAAAA"
+    
+    assert checkout_solution.checkout(sku_string) == 200
+
+def test_checkout_for_basket_with_B_rule():
+    sku_string = "BB"
+    
+    assert checkout_solution.checkout(sku_string) == 45
