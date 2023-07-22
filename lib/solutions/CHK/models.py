@@ -6,9 +6,6 @@ from pydantic import BaseModel
 
 from solutions.CHK import static_prices
 
-class Basket(BaseModel):
-    skus: str
-
 class FreeProductSideEffect(BaseModel):
     product: str
 
@@ -24,7 +21,23 @@ class Offer(BaseModel):
         count_after_offers = count - (self.quantity * int(count / self.quantity))
 
         return offers_price, count_after_offers
+
+class Basket(BaseModel):
+    skus: str
+    prices: dict[str, int]
+    offers: list[Offer]
+
+    def calculate_price():
+        ...
+
+    def _apply_free_products():
+
+        ...
     
+    def _apply_offers():
+        ...
+
+
 def load_offers() -> dict[str, Offer]:
     offers = static_prices.OFFERS
     parsed_offers = defaultdict(list)
@@ -44,3 +57,4 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
