@@ -1,7 +1,7 @@
 
 from unittest.mock import patch
 from solutions.CHK import checkout_solution
-from solutions.CHK.models import FreeProductSideEffect, Offer
+from solutions.CHK.models import PriceOffer, FreeProductOffer
 
 # TODO what happens if the prices change, which reqs say offers do weekly
 # fixtures and patching probably quickest way around this, prefer factoryboy
@@ -42,8 +42,8 @@ def test_checkout_for_basket_with_lots_of_products_with_overlapping_rules():
     }
 )
 def test_checkout_for_basket_where_mutliple_offers_for_same_product_prioritises_high_quantity(mocked_load_offers):
-    offer_for_three = Offer(product="A", quantity=3, price=130)
-    offer_for_five = Offer(product="A", quantity=5, price=200)
+    offer_for_three = PriceOffer(product="A", quantity=3, price=130)
+    offer_for_five = PriceOffer(product="A", quantity=5, price=200)
 
     mocked_load_offers.return_value = [offer_for_three, offer_for_five]
     sku_string = "AAAAAA"
@@ -60,11 +60,10 @@ def test_checkout_for_basket_where_mutliple_offers_for_same_product_prioritises_
     }
 )
 def test_checkout_for_basket_where_offers_remove_the_offered_product(mocked_load_offers):
-    offer_for_self_removal = Offer(
+    offer_for_self_removal = FreeProductOffer(
         product="A",
         quantity=3,
-        price=30,
-        side_effect=FreeProductSideEffect(product="A")
+        free_product="A"
     )
 
     mocked_load_offers.return_value = [offer_for_self_removal]
@@ -81,11 +80,10 @@ def test_checkout_for_basket_where_offers_remove_the_offered_product(mocked_load
     }
 )
 def test_checkout_for_basket_where_offers_remove_the_offered_product_and_applies_offer(mocked_load_offers):
-    offer_for_self_removal = Offer(
+    offer_for_self_removal = FreeProductOffer(
         product="A",
         quantity=3,
-        price=30,
-        side_effect=FreeProductSideEffect(product="A")
+        free_product="A"
     )
 
     mocked_load_offers.return_value = [offer_for_self_removal]
@@ -102,11 +100,10 @@ def test_checkout_for_basket_where_offers_remove_the_offered_product_and_applies
     }
 )
 def test_checkout_for_basket_where_offers_remove_the_product_when_count_even_has_no_effect(mocked_load_offers):
-    offer_for_self_removal = Offer(
+    offer_for_self_removal = FreeProductOffer(
         product="A",
         quantity=3,
-        price=30,
-        side_effect=FreeProductSideEffect(product="A")
+        free_product="A"
     )
 
     mocked_load_offers.return_value = [offer_for_self_removal]

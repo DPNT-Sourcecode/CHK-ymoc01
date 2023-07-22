@@ -1,6 +1,6 @@
 
 from unittest.mock import patch
-from solutions.CHK.models import Offer, load_offers
+from solutions.CHK.models import FreeProductOffer, Offer, PriceOffer, load_offers
 
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
@@ -37,10 +37,10 @@ def test_load_offers_correctly_loads_offer_as_object():
     assert len(loaded_offers) == 1
 
     loaded_offer = loaded_offers[0]
+    assert isinstance(loaded_offer, PriceOffer)
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.price == 100
-    assert loaded_offer.side_effect == None
 
 @patch(
     "solutions.CHK.static_prices.OFFERS", [
@@ -61,23 +61,22 @@ def test_load_offers_correctly_loads_multiple_offers_as_objects():
     assert len(loaded_offers) == 2
 
     loaded_offer = loaded_offers[0]
+    assert isinstance(loaded_offer, PriceOffer)
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.price == 100
-    assert loaded_offer.side_effect == None
 
     loaded_offer = loaded_offers[1]
+    assert isinstance(loaded_offer, PriceOffer)
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 50
     assert loaded_offer.price == 75
-    assert loaded_offer.side_effect == None
 
 @patch(
     "solutions.CHK.static_prices.OFFERS", [
         {
             "product": "A",
             "quantity": 25,
-            "price": 100,
             "free_product": "B"
         },
     ]
@@ -87,8 +86,8 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert len(loaded_offers) == 1
 
     loaded_offer = loaded_offers[0]
+    assert isinstance(loaded_offer, FreeProductOffer)
+
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
-    assert loaded_offer.price == 100
-    assert loaded_offer.side_effect != None
-    assert loaded_offer.side_effect.product == "B"
+    assert loaded_offer.free_product == "B"
