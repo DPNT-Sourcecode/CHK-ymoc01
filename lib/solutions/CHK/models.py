@@ -41,17 +41,23 @@ class GroupDiscountOffer(Offer):
     price: int
     mutlibuy_with_products: list[str]
 
-    def times_offer_can_be_applied(self, skus: str) -> int:
-        multibuy_group = self.mutlibuy_with_products + [self.product]
+    @property
+    def multibuy_group(self) -> list[str]:
+        return self.mutlibuy_with_products + [self.product]
 
+    def times_offer_can_be_applied(self, skus: str) -> int:
         match_count = 0
         for sku in skus:
-            if sku in multibuy_group:
+            if sku in self.multibuy_group:
                 match_count += 1
 
         return int(match_count / self.quantity)
 
     def apply(self, skus: str) -> tuple[int, str]:
+        times_to_apply = self.times_offer_can_be_applied(skus)
+
+        while times_to_apply > 0:
+            
         return 0, skus
 
 class Basket(BaseModel):
@@ -141,6 +147,7 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
+
 
 
 
