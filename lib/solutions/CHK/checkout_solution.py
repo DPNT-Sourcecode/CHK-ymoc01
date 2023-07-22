@@ -36,24 +36,6 @@ def checkout(skus: str) -> int:
 
     return basket_total
 
-# This signature is becoming absolutely grim, refactor into something which knows about
-# the overarching list of products to be purchased, perhaps Basket model
-def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int, list[str]]:
-    total_offer_price = 0
-    count_after_offers = count
-    free_products = []
-
-    # At the moment, highest quantity offers benefit customer more, so prioritise those
-    sorted_offers = sorted(offers, key=lambda x: x.quantity, reverse=True)
-    for offer in sorted_offers:
-        offer_price, count_after_offers = offer.apply(count_after_offers)
-        total_offer_price += offer_price
-
-        if offer_price != 0 and offer.side_effect is not None:
-            free_products.append(offer.side_effect.product)
-
-
-    return total_offer_price, count_after_offers, free_products
 
 
 
