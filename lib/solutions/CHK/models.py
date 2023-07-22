@@ -25,34 +25,34 @@ class Offer(BaseModel):
 class Basket(BaseModel):
     skus: str
     prices: dict[str, int]
-    offers: dict[str, Offer]
+    offers: dict[str, list[Offer]]
 
     def calculate_price(self):
-        # For now, assuming SKUs are structured like AAABCAD
-        product_counts = defaultdict(int)
-        for sku in self.skus:
-            product_counts[sku] += 1
+        skus_to_process = self.skus
+        # product_counts = defaultdict(int)
+        # for sku in self.skus:
+        #     product_counts[sku] += 1
 
-        basket_total = 0
-        for product, count in product_counts.items():
-            offer_adjusted_count = count
+        # basket_total = 0
+        # for product, count in product_counts.items():
+        #     offer_adjusted_count = count
 
-            offers_for_product = self.offers.get(product)
-            if offers_for_product:
-                offer_price, offer_adjusted_count, products_to_remove = self._apply_offers(offers_for_product, count)
-                for product in products_to_remove:
-                    if product in self.skus:
-                        basket_total -= self.prices[product]
-                basket_total += offer_price
+        #     offers_for_product = self.offers.get(product)
+        #     if offers_for_product:
+        #         offer_price, offer_adjusted_count, products_to_remove = self._apply_offers(offers_for_product, count)
+        #         for product in products_to_remove:
+        #             if product in self.skus:
+        #                 basket_total -= self.prices[product]
+        #         basket_total += offer_price
 
-            try:
-                product_price = self.prices[product]
-            except KeyError:
-                return -1
+        #     try:
+        #         product_price = self.prices[product]
+        #     except KeyError:
+        #         return -1
             
-            basket_total += offer_adjusted_count * product_price
+        #     basket_total += offer_adjusted_count * product_price
 
-        return basket_total
+        # return basket_total
 
 
     def _apply_free_products(self):
@@ -95,5 +95,6 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
