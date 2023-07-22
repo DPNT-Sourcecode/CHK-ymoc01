@@ -25,8 +25,10 @@ class Offer(BaseModel):
         count = skus.count(self.product)
 
         if count < self.quantity:
-            return int(count / self.quantity)
-        return 0
+            return 0
+        
+        return int(count / self.quantity)
+        
 
 class Basket(BaseModel):
     skus: str
@@ -65,7 +67,9 @@ class Basket(BaseModel):
                 else:
                     possible_removal_count = skus_after_processing.count(product_to_remove) % \
                         offer_with_free_product.quantity
-                    while possible_removal_count > 0
+                    breakpoint()
+                    if possible_removal_count > 0:
+                        skus_after_processing = skus_after_processing.replace(product_to_remove, "", 1)
         
         return skus_after_processing
 
@@ -112,5 +116,6 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
