@@ -90,7 +90,6 @@ class Basket(BaseModel):
         offer_price, skus_to_process = self._apply_group_discount_offers(skus_to_process)
         basket_total += offer_price
 
-        basket_total = offer_price
         for sku in skus_to_process:
             try:
                 basket_total += self.prices[sku]
