@@ -61,4 +61,3 @@ class TestSum():
             sum_solution.compute(first_argument, second_argument)
         
         assert str(exception.value) == "Inputs must be integers"
-
