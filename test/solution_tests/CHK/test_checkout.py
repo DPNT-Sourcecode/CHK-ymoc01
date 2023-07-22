@@ -27,7 +27,8 @@ def test_checkout_for_basket_with_free_product_which_has_offer_removes_offer():
     sku_string = "BBEE"
     assert checkout_solution.checkout(sku_string) == 110
 
-def test_checkout_for_basket_with_lots_of_products():
-    sku_string = "AAAAABBBCCDDDDEEE"
-    assert checkout_solution.checkout(sku_string) == 110
+def test_checkout_for_basket_with_lots_of_products_with_conflicting_rules():
+    sku_string = "AAAAABBBBCCDDDDEEEE"
+    assert checkout_solution.checkout(sku_string) == 200 + 45 + 40 + 60 + 160
+
 
