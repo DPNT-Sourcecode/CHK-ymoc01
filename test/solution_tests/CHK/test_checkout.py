@@ -19,6 +19,14 @@ def test_checkout_for_basket_with_unpriced_items_returns_minus_1():
     sku_string = "Z"
     assert checkout_solution.checkout(sku_string) == -1
 
+def test_checkout_for_basket_with_free_product_removes_free_product_cost():
+    sku_string = "BEE"
+    assert checkout_solution.checkout(sku_string) == 80
+
+def test_checkout_for_basket_with_free_product_which_has_offer_removes_offer():
+    sku_string = "BBEE"
+    assert checkout_solution.checkout(sku_string) == 110
+
 def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
     offer = Offer(quantity=3, price=999)
     
@@ -76,6 +84,7 @@ def test_calculate_price_of_offers_with_side_effect_returns_products_for_removal
     assert total_offer_price == 80
     assert count_after_offers == 0
     assert products_for_removal == ["B"]
+
 
 
 

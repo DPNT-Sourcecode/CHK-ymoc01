@@ -6,6 +6,9 @@ from pydantic import BaseModel
 
 from solutions.CHK import static_prices
 
+class Basket(BaseModel):
+    skus: str
+
 class FreeProductSideEffect(BaseModel):
     product: str
 
