@@ -57,7 +57,8 @@ class Basket(BaseModel):
         products_to_remove = []
         for offer_with_free_product in offers_with_free_product:
             for _ in range(offer_with_free_product.times_offer_can_be_applied(skus)):
-                products_to_remove.append(offer_with_free_product.side_effect.product)
+                product_to_remove = offer_with_free_product.side_effect.product
+                products_to_remove.append(product_to_remove)
 
         skus_after_processing = skus
         for product in products_to_remove:
