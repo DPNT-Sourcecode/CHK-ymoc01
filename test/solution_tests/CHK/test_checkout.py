@@ -94,7 +94,12 @@ def test_checkout_for_basket_where_offers_remove_the_product_when_count_even_has
 
     assert checkout_solution.checkout(sku_string) == 30
 
-def test_order_skus_by_highest_to_lowest_price()
+def test_order_skus_by_highest_to_lowest_price():
+    prices = {"A": 54, "B":5, "C": 10}
+
+    skus = "BBBCAAAB"
+
+    assert checkout_solution.order_skus_by_highest_to_lowest_price(skus, prices) == "AAACBBBB"
 
 # Explicit rule testing for CHK_R4
 def test_checkout_for_basket_A_rule_1():
