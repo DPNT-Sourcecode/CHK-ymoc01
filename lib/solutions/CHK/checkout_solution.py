@@ -18,20 +18,19 @@ def checkout(skus: str) -> int:
     for product, count in product_counts.items():
         offer = offers.get(product)
         if offer:
-            basket_total = calculate_offer_value(offer, count)
+            basket_total += calculate_price_of_offers(offer, count)
             adjusted_count = count - offer["quantity"]
         else:
             adjusted_count = count
         
+        try:
+            product_price = prices[product]
+        except KeyError:
+            return -1
         
-
-        
-
-            
-
-
+        basket_total += adjusted_count * product_price
 
     return basket_total
 
-def calculate_offer_value(offer: dict[str, int], count: int) -> int:
+def calculate_price_of_offers(offer: dict[str, int], count: int) -> int:
     ...
