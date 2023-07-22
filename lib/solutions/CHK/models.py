@@ -1,6 +1,4 @@
 
-
-from collections import defaultdict
 from typing import Optional
 from pydantic import BaseModel
 
@@ -35,6 +33,7 @@ class Basket(BaseModel):
     offers: list[Offer]
 
     def calculate_price(self):
+        breakpoint()
         skus_to_process = self.skus
 
         skus_to_process = self._apply_free_products(skus_to_process)
@@ -49,7 +48,6 @@ class Basket(BaseModel):
                 return -1
 
         return basket_total
-
 
     def _apply_free_products(self, skus: str):
         offers_with_free_product = [offer for offer in self.offers if offer.side_effect is not None]
@@ -101,6 +99,7 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
 
 
 
