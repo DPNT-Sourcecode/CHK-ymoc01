@@ -108,5 +108,3 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
-
-

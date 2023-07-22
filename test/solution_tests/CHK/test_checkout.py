@@ -49,10 +49,3 @@ def test_calculate_price_of_offers_for_multiple_offers_prioritises_high_quantity
     sku_string = "AAAAAA"
     
     assert checkout_solution.checkout(sku_string) == 200 + 50
-
-
-
-
-
-
-
