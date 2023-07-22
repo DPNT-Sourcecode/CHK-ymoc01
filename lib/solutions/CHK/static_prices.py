@@ -54,6 +54,3 @@ OFFERS = [
     {"product": "Y", "quantity": 3, "price": 45, "multibuy_with": ["T","X","S","Z"]},
     {"product": "Z", "quantity": 3, "price": 45, "multibuy_with": ["T","X","Y","S"]},
 ]
-
-
-

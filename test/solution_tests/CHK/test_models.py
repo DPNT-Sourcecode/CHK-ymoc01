@@ -1,6 +1,6 @@
 
 from unittest.mock import patch
-from solutions.CHK.models import FreeProductOffer, PriceOffer, load_offers
+from solutions.CHK.models import FreeProductOffer, PriceOffer, MultibuyOffer, load_offers
 
 
 def test_offer_apply_returns_offer_price_and_adjusted_count():
@@ -106,8 +106,8 @@ def test_load_offers_correctly_loads_offer_with_multibuy_products():
     assert len(loaded_offers) == 1
 
     loaded_offer = loaded_offers[0]
-    assert isinstance(loaded_offer, FreeProductOffer)
+    assert isinstance(loaded_offer, MultibuyOffer)
 
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
-    assert loaded_offer.free_product == "B"
+    assert loaded_offer.mutlibuy_with_products == ["B", "C"]

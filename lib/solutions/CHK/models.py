@@ -18,11 +18,11 @@ class Offer(BaseModel):
 class PriceOffer(Offer):
     price: int
 
-    def apply(self, count: int) -> tuple[int, int]:
-        number_of_offer_occurences = int(count / self.quantity)
+    def apply(self, skus: str) -> tuple[int, int]:
+        number_of_offer_occurences = self.times_offer_can_be_applied(skus)
 
         offers_price = number_of_offer_occurences * self.price
-        count_to_remove = (self.quantity * self.times_offer_can_be_applied())
+        count_to_remove = (self.quantity * number_of_offer_occurences)
 
         return offers_price, count_to_remove
 
