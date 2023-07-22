@@ -25,19 +25,19 @@ class Offer(BaseModel):
 def load_offers() -> dict[str, Offer]:
     offers = static_prices.OFFERS
     parsed_offers = defaultdict(list)
-    breakpoint()
-    for product, offer in offers.items():
+
+    for offer in offers:
         if free_product := offer.get("free_product"):
             side_effect = FreeProductSideEffect(product=free_product)
         else:
             side_effect = None
 
-        parsed_offers[product].append(
+        parsed_offers[offer["product"]].append(
             Offer(
                 quantity=offer["quantity"], 
                 price=offer["price"],
                 side_effect=side_effect
             )
         )
-    breakpoint()
+
     return parsed_offers

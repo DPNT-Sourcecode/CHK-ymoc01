@@ -6,13 +6,15 @@ ITEM_PRICES = {
     "D": 15
 }
 
-OFFERS = {
-    "A": {
+OFFERS = [
+    {
+        "product": "A",
         "quantity": 3,
         "price": 130,
     },
-    "B": {
+    {
+        "product": "B",
         "quantity": 2,
-          "price": 45
+        "price": 45
     }
-}
+]
