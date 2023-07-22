@@ -57,3 +57,24 @@ def test_load_offers_correctly_loads_multiple_offers_as_objects():
     assert loaded_offer.quantity == 50
     assert loaded_offer.price == 75
     assert loaded_offer.side_effect == None
+
+@patch(
+    "solutions.CHK.static_prices.OFFERS", [
+        {
+            "product": "A",
+            "quantity": 25,
+            "price": 100,
+            "free_product": "B"
+        },
+    ]
+)
+def test_load_offers_correctly_loads_offer_with_free_product():
+    loaded_offers = load_offers()
+    assert len(loaded_offers) == 1
+    assert len(loaded_offers["A"]) == 1
+
+    loaded_offer = loaded_offers["A"][0]
+    assert loaded_offer.quantity == 25
+    assert loaded_offer.price == 100
+    assert loaded_offer.side_effect != None
+    assert loaded_offer.side_effect.product == "B"

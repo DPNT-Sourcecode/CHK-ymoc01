@@ -1,5 +1,5 @@
 from solutions.CHK import checkout_solution
-from solutions.CHK.models import Offer
+from solutions.CHK.models import FreeProductSideEffect, Offer
 
 # TODO what happens if the prices change, which reqs say offers do weekly
 # fixtures and patching probably quickest way around this, prefer factoryboy
@@ -54,20 +54,15 @@ def test_calculate_price_of_offers_for_multiple_offers_calculates_applies_both_o
     assert count_after_offers == 1
 
 def test_calculate_price_of_offers_with_side_effect_returns_products_for_removal():
-    offer_for_three = Offer(quantity=3, price=130)
-    offer_for_five = Offer(quantity=5, price=200)
+    offer_with_side_effect = Offer(quantity=2, price=80, side_effect=FreeProductSideEffect(product="B"))
 
-    offers = [offer_for_three, offer_for_five]
-    count = 9
+    offers = [offer_with_side_effect]
+    count = 2
 
-    total_offer_price, count_after_offers = checkout_solution.calculate_price_of_offers(offers, count)
+    total_offer_price, count_after_offers, products_for_removal = checkout_solution.calculate_price_of_offers(offers, count)
 
-    assert total_offer_price == 330
+    assert total_offer_price == 80
     assert count_after_offers == 1
-
-
-
-
 
 
 

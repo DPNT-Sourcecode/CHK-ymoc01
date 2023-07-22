@@ -25,5 +25,3 @@ OFFERS = [
         "free_product": "B"
     }
 ]
-
-
