@@ -32,7 +32,7 @@ OFFERS = [
     },
     {
         "product": "F",
-        "quantity": 2,
+        "quantity": 3,
         "price": 20,
         "free_product": "F"
     }

@@ -62,8 +62,8 @@ def test_checkout_for_basket_where_mutliple_offers_for_same_product_prioritises_
 def test_checkout_for_basket_where_offers_remove_the_offered_product(mocked_load_offers):
     offer_for_self_removal = Offer(
         product="A",
-        quantity=2,
-        price=20,
+        quantity=3,
+        price=30,
         side_effect=FreeProductSideEffect(product="A")
     )
 
@@ -83,8 +83,8 @@ def test_checkout_for_basket_where_offers_remove_the_offered_product(mocked_load
 def test_checkout_for_basket_where_offers_remove_the_offered_product_and_applies_offer(mocked_load_offers):
     offer_for_self_removal = Offer(
         product="A",
-        quantity=2,
-        price=20,
+        quantity=3,
+        price=30,
         side_effect=FreeProductSideEffect(product="A")
     )
 
@@ -104,12 +104,12 @@ def test_checkout_for_basket_where_offers_remove_the_offered_product_and_applies
 def test_checkout_for_basket_where_offers_remove_the_product_when_count_even_has_no_effect(mocked_load_offers):
     offer_for_self_removal = Offer(
         product="A",
-        quantity=2,
-        price=20,
+        quantity=3,
+        price=30,
         side_effect=FreeProductSideEffect(product="A")
     )
 
     mocked_load_offers.return_value = [offer_for_self_removal]
-    sku_string = "AA"
+    sku_string = "AAAA"
     
-    assert checkout_solution.checkout(sku_string) == 20
+    assert checkout_solution.checkout(sku_string) == 30
