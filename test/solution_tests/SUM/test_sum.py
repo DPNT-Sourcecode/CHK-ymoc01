@@ -4,14 +4,14 @@ from solutions.SUM import sum_solution
 
 class TestSum():
     @pytest.mark.parametrize(
-        "first_integer, second_integer", 
+        "first_integer, second_integer, sum", 
         [
-            (0, 1), 
-            (1, 2),
+            (0, 1, 1), 
+            (1, 2, 3),
         ]
     )
-    def test_sum_of_valid_numbers_returns_sum(self, first_integer, second_integer):
-        assert sum_solution.compute(1, 2) == 3
+    def test_sum_of_valid_numbers_returns_sum(self, first_integer, second_integer, sum):
+        assert sum_solution.compute(first_integer, second_integer) == sum
 
     @pytest.mark.parametrize(
         "first_integer, second_integer", 
@@ -33,9 +33,9 @@ class TestSum():
     @pytest.mark.parametrize(
         "first_integer, second_integer", 
         [
-            (0, 99), 
-            (99, 0),
-            (0, 0),
+            (-1, 99), 
+            (99, -1),
+            (-1, -1),
             (-100, 99), 
             (99, -100),
             (-100, -100)
@@ -61,3 +61,4 @@ class TestSum():
             sum_solution.compute(first_argument, second_argument)
         
         assert str(exception.value) == "Inputs must be integers"
+
