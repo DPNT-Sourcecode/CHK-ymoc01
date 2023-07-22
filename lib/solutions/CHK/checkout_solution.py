@@ -1,14 +1,14 @@
 
 
 from collections import defaultdict
-from solutions.CHK.models import Offer
-from solutions.CHK.static_prices import ITEM_PRICES, OFFERS
+from solutions.CHK.models import Offer, load_offers
+from solutions.CHK.static_prices import ITEM_PRICES
 
 # noinspection PyUnusedLocal
 # skus = unicode string
 def checkout(skus: str) -> int:
     prices = ITEM_PRICES
-    offers = OFFERS
+    offers = load_offers()
 
     # For now, assuming SKUs are structured like AAABCAD
     product_counts = defaultdict(int)
@@ -42,3 +42,4 @@ def calculate_price_of_offers(offers: list[Offer], count: int) -> tuple[int, int
         total_offer_price += offer_price
 
     return total_offer_price, count_after_offers
+
