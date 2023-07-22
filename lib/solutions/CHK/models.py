@@ -23,7 +23,7 @@ class Offer(BaseModel):
     
 def load_offers() -> dict[str, Offer]:
     offers = OFFERS
-    parsed_offers = []
+    parsed_offers = {}
 
     for product, offer in offers.items():
         if free_product := offer.get("free_product"):
@@ -36,3 +36,5 @@ def load_offers() -> dict[str, Offer]:
             price=offer["price"],
             side_effect=side_effect
         )
+    
+    return parsed_offers

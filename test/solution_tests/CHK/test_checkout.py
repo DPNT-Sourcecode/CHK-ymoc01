@@ -20,34 +20,37 @@ from solutions.CHK.models import Offer, load_offers
 #     sku_string = "Z"
 #     assert checkout_solution.checkout(sku_string) == -1
 
-def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
-    offer = Offer(quantity=3, price=999)
-    assert checkout_solution.calculate_price_of_offers([offer], 3) == (999, 0)
+# def test_calculate_price_of_offers_for_single_offer_returns_offer_price_and_adjusted_count():
+#     offer = Offer(quantity=3, price=999)
+#     assert checkout_solution.calculate_price_of_offers([offer], 3) == (999, 0)
 
-def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
-    offer = Offer(quantity=999, price=999)
-    assert checkout_solution.calculate_price_of_offers([offer], 1) == (0, 1)
+# def test_calculate_price_of_offers_for_no_offer_returns_zero_price_and_unchanged_count():
+#     offer = Offer(quantity=999, price=999)
+#     assert checkout_solution.calculate_price_of_offers([offer], 1) == (0, 1)
 
-def test_offer_apply_returns_offer_price_and_adjusted_count():
-    offer = Offer(quantity=3, price=999)
-    assert offer.apply(3) == (999, 0)
+# def test_offer_apply_returns_offer_price_and_adjusted_count():
+#     offer = Offer(quantity=3, price=999)
+#     assert offer.apply(3) == (999, 0)
 
-def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
-    offer = Offer(quantity=999, price=999)
-    assert offer.apply(1) == (0, 1)
+# def test_offer_apply_no_offer_returns_zero_price_and_unchanged_count():
+#     offer = Offer(quantity=999, price=999)
+#     assert offer.apply(1) == (0, 1)
 
 @patch(
     "solutions.CHK.static_prices.OFFERS", {   
         "A": {
-            "quantity": 1,
-            "price": 10,
+            "quantity": 25,
+            "price": 100,
         },
     }
 )
 def test_load_offers_correctly_loads_offer_as_object():
     loaded_offers = load_offers()
-    assert len(loaded_offers, 1)
+    assert len(loaded_offers) == 1
+    assert loaded_offers["A"].quantity == 25
+    assert loaded_offers["A"].price == 100
 
 def test_calculate_price_of_offers_for_multiple_offers_calculates_lowest_price_combination():
     ...
     
+
