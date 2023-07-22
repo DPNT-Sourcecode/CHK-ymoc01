@@ -107,7 +107,10 @@ def test_load_offers_correctly_loads_offer_with_free_product():
 @patch(
     "solutions.CHK.static_prices.OFFERS",
     [
-        {"product": "A", "quantity": 25, "multibuy_with": ["B", "C"]},
+        {"product": "A", 
+         "quantity": 25,
+         "price": 100,
+         "multibuy_with": ["B", "C"]},
     ],
 )
 def test_load_offers_correctly_loads_offer_with_multibuy_products():
@@ -119,6 +122,7 @@ def test_load_offers_correctly_loads_offer_with_multibuy_products():
 
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
+    assert loaded_offer.price == 100
     assert loaded_offer.mutlibuy_with_products == ["B", "C"]
 
 
@@ -135,19 +139,19 @@ def test_group_discount_offer_times_offer_can_be_applied_returns_one_for_one_gro
     skus,
 ):
     discount_offer = GroupDiscountOffer(
-        product="A", quantity=3, mutlibuy_with_products=["B", "C", "D", "E"]
+        product="A", quantity=3, price=0, mutlibuy_with_products=["B", "C", "D", "E"]
     )
 
     assert discount_offer.times_offer_can_be_applied(skus) == 1
 
-def test_group_discount_offer_apply_correctly_calculates_discount_and_removes_skus(
-    skus,
-):
+def test_group_discount_offer_apply_correctly_calculates_discount_and_removes_skus():
     discount_offer = GroupDiscountOffer(
-        product="A", quantity=3, mutlibuy_with_products=["B", "C", "D", "E"]
+        product="A", quantity=3, price=30, mutlibuy_with_products=["B", "C", "D", "E"]
     )
 
-    assert discount_offer.times_offer_can_be_applied(skus) == 1
+    skus = "ABCDE"
+
+    assert discount_offer.apply(skus) == 30, "DE"
 
 
 

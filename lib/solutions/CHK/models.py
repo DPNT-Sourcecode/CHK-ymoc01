@@ -38,6 +38,7 @@ class FreeProductOffer(Offer):
         )
 
 class GroupDiscountOffer(Offer):
+    price: int
     mutlibuy_with_products: list[str]
 
     def times_offer_can_be_applied(self, skus: str) -> int:
@@ -127,6 +128,7 @@ def load_offers() -> dict[str, Offer]:
             parsed_offer = GroupDiscountOffer(
                 product=offer["product"],
                 quantity=offer["quantity"],
+                price=offer["price"],
                 mutlibuy_with_products=multibuy_with
             )
         else:
