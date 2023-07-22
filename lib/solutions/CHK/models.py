@@ -23,10 +23,11 @@ class Offer(BaseModel):
 
         return offers_price, count_after_offers
     
-    def can_be_applied(self, skus: str) -> bool:
-        if skus.count(self.product) >= self.quantity:
-            return True
-        return False
+    def times_offer_can_be_applied(self, skus: str) -> int:
+        count = skus.count(self.product)
+        if count >= self.quantity:
+            return (self.quantity * int(count / self.quantity))
+        return 0
 
 class Basket(BaseModel):
     skus: str
@@ -109,3 +110,4 @@ def load_offers() -> dict[str, Offer]:
         )
 
     return parsed_offers
+
