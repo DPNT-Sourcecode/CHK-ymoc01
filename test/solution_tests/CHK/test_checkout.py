@@ -110,4 +110,3 @@ def test_checkout_for_basket_where_offers_remove_the_product_when_count_even_has
     sku_string = "AAAA"
     
     assert checkout_solution.checkout(sku_string) == 30
-

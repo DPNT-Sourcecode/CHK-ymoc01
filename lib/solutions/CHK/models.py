@@ -119,6 +119,3 @@ def load_offers() -> dict[str, Offer]:
         parsed_offers.append(parsed_offer)
 
     return parsed_offers
-
-
-

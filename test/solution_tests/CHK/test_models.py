@@ -91,4 +91,3 @@ def test_load_offers_correctly_loads_offer_with_free_product():
     assert loaded_offer.product == "A"
     assert loaded_offer.quantity == 25
     assert loaded_offer.free_product == "B"
-
