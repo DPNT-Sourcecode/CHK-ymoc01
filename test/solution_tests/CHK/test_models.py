@@ -113,5 +113,14 @@ def test_load_offers_correctly_loads_offer_with_multibuy_products():
     assert loaded_offer.mutlibuy_with_products == ["B", "C"]
 
 
+def test_group_discount_offer_times_offer_can_be_applied_returns_one_for_one_group():
+    discount_offer = GroupDiscountOffer(
+        product="A",
+        quantity=3,
+        mutlibuy_with_products=["B", "C", "D", "E"]
+    )
+    skus = "ABCDE"
+
+    assert discount_offer.times_offer_can_be_applied(skus) == 1
 
 

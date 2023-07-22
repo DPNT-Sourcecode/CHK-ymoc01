@@ -41,6 +41,7 @@ class GroupDiscountOffer(Offer):
     mutlibuy_with_products: list[str]
 
     def times_offer_can_be_applied(self, skus: str) -> int:
+        multibuy_group = self.mutlibuy_with_products + [self.product]
         return 0
 
     def apply(self, skus: str) -> tuple[int, str]:
