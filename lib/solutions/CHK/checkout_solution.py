@@ -13,7 +13,7 @@ def checkout(skus: str) -> int:
     product_counts = defaultdict(int)
     for sku in skus:
         product_counts[sku] += 1
-    breakpoint()
+
     basket_total = 0
     for product, count in product_counts.items():
         offer_adjusted_count = count
@@ -21,7 +21,7 @@ def checkout(skus: str) -> int:
         offer = offers.get(product)
         if offer:
             basket_total += calculate_price_of_offers(offer, count)
-            offer_adjusted_count -= count * int(count / offer["quantity"])
+            offer_adjusted_count -= offer["quantity"] * int(count / offer["quantity"])
 
         try:
             product_price = prices[product]
@@ -32,10 +32,12 @@ def checkout(skus: str) -> int:
 
     return basket_total
 
-def calculate_price_of_offers(offer: dict[str, int], count: int) -> int:
+def calculate_price_of_offers(offer: dict[str, int], count: int) -> tuple(int, int):
     offer_quantity = offer["quantity"]
 
     # Dividing and then rounding down, thereby dropping any remainder
     number_of_offer_occurences = int(count / offer_quantity)
 
+    offers_price = number_of_offer_occurences * offer["price"]
+    count_after_offers = count - (offer_quantity * int(count / offer_quantity))
     return number_of_offer_occurences * offer["price"]
